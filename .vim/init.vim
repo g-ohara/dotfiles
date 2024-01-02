@@ -1,0 +1,1 @@
+/home/genji/GitHub/dotfiles/.vimrc

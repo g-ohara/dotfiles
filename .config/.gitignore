@@ -1,0 +1,7 @@
+*
+*/
+
+!.gitignore
+!nvim
+!mimeapps.list
+!flake8
