@@ -13,51 +13,24 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-set laststatus=2
-
 " set column lign at 80
 set colorcolumn=80
 highlight ColorColumn ctermbg=DarkGrey guibg=lightgrey
 
+" Always show the status line
 set laststatus=2
 
 " set color of vim terminal
 set background=dark
 colorscheme industry
 
-let maplocalleader = ","
-
-" install plugins
-" filetype plugin on
+" Plugin list
 call plug#begin()
-Plug 'dense-analysis/ale'
-Plug 'itchyny/lightline.vim'
-Plug 'lervag/vimtex'
-
-" Show git diff in the sign column.
-Plug 'tpope/vim-fugitive'
-
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-Plug 'github/copilot.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale' " Manage linters and formatters
+Plug 'github/copilot.vim' " Vim plugin for GitHub Copilot
+Plug 'itchyny/lightline.vim' " Display beautiful status line
+Plug 'lervag/vimtex' "A modern Vim and neovim filetype plugin for LaTeX files.
 call plug#end()
-
-" set coc.nvim for Haskell
-let g:coc_global_extensions = [
-    \ 'coc-hls',
-    \ 'coc-json',
-    \ 'coc-clangd',
-    \ 'coc-pyright'
-    \]
-
-let g:deoplete#enable_at_startup = 1
 
 " ----------------------------------------------------------------------------
 "  Settings for dense-analysis/ale
@@ -65,12 +38,12 @@ let g:deoplete#enable_at_startup = 1
 
 let g:ale_fixers = {
   \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \   'cpp': ['astyle'],
   \   'python': ['autopep8', 'black', 'isort'],
   \ }
 let g:ale_fix_on_save = 1
 let g:ale_python_black_options='--line-length=79 --preview'
 let g:ale_python_flake8_options='--config ~/.config/flake8'
-
 
 " ----------------------------------------------------------------------------
 "  Settings for lervag/vimtex
