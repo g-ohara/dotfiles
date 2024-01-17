@@ -72,11 +72,22 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && \
-        eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+# -----------------------------------------------------------------------------
+
+# Export an environment variable 'SHELL' to run dircolors without errors
+if [ ! -z "$SHELL" ]; then
+    export SHELL
 fi
+
+# Import .colorrc to set color of strings when ls command executed
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval `dircolors ~/.colorrc`
+fi
+
+# set background color of terminal (set RGB following '#' in hexadecimal form)
+echo -e "\033]11;#000000\a"
+
+# -----------------------------------------------------------------------------
 
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -96,11 +107,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-# -----------------------------------------------------------------------------
-
-# set background color of terminal (set RGB following '#' in hexadecimal form)
-echo -e "\033]11;#000000\a"
-
-# import .colorrc to set color of strings when ls command executed
-eval `dircolors ~/.colorrc`
