@@ -21,7 +21,10 @@ set smartindent
 set expandtab
 
 " Set indentation to 2 spaces for C and C++
-autocmd FileType c,cpp setlocal tabstop=2 shiftwidth=2
+augroup local_indent
+  autocmd!
+  autocmd FileType vim,c,cpp setlocal tabstop=2 shiftwidth=2
+augroup END
 
 
 " ----------------------------------------------------------------------------
@@ -29,7 +32,7 @@ autocmd FileType c,cpp setlocal tabstop=2 shiftwidth=2
 " ----------------------------------------------------------------------------
 
 " set number when width of terminal is enough
-if &co > 80
+if &columns > 80
   set number
 endif
 set cursorline
@@ -52,8 +55,9 @@ colorscheme industry
 
 call plug#begin()
 Plug 'dense-analysis/ale' " Manage linters and formatters
-Plug 'github/copilot.vim' " Vim plugin for GitHub Copilot
 Plug 'itchyny/lightline.vim' " Display beautiful status line
+Plug 'maximbaz/lightline-ale' " ALE support for lightline.vim
+Plug 'github/copilot.vim' " Vim plugin for GitHub Copilot
 Plug 'lervag/vimtex' "A modern Vim and neovim filetype plugin for LaTeX files.
 call plug#end()
 
@@ -62,14 +66,68 @@ call plug#end()
 "  dense-analysis/ale
 " ----------------------------------------------------------------------------
 
+" Enable specific linters
+let g:ale_linters = {
+      \ 'python': ['flake8', 'pylint', 'mypy', 'ruff']
+      \ }
+
+" Show the linter, the error code and the severity with the error message
+let g:ale_echo_msg_format = '[%linter%] %code%: %s [%severity%]'
+
+" Enable specific fixers
 let g:ale_fixers = {
-  \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-  \   'cpp': ['astyle'],
-  \   'python': ['autopep8', 'black', 'isort'],
-  \ }
-let g:ale_fix_on_save = 1
-let g:ale_python_black_options='--line-length=79 --preview'
+      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \ 'cpp': ['astyle'],
+      \ 'python': ['autopep8', 'black', 'isort'],
+      \ }
+
+" Options for fixers
 let g:ale_python_flake8_options='--config ~/.config/flake8'
+let g:ale_python_black_options='--line-length=79 --preview'
+
+" Fix automatically when saving
+let g:ale_fix_on_save = 1
+
+
+" ----------------------------------------------------------------------------
+"  itchyny/lightline.vim
+"  maximbaz/lightline-ale
+" ----------------------------------------------------------------------------
+
+" Set lightline theme
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ }
+
+" Settings for lightline-ale
+let g:lightline.component_expand = {
+      \ 'linter_checking': 'lightline#ale#checking',
+      \ 'linter_infos': 'lightline#ale#infos',
+      \ 'linter_warnings': 'lightline#ale#warnings',
+      \ 'linter_errors': 'lightline#ale#errors',
+      \ 'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \ 'linter_checking': 'right',
+      \ 'linter_infos': 'right',
+      \ 'linter_warnings': 'warning',
+      \ 'linter_errors': 'error',
+      \ 'linter_ok': 'right',
+      \ }
+let g:lightline.active = {
+      \ 'right': [
+        \ [
+          \ 'linter_checking',
+          \ 'linter_errors',
+          \ 'linter_warnings',
+          \ 'linter_infos',
+          \ 'linter_ok'
+        \ ],
+        \ ['lineinfo'],
+        \ [ 'percent' ],
+        \ [ 'fileformat', 'fileencoding', 'filetype']
+      \ ]
+      \ }
 
 
 " ----------------------------------------------------------------------------
@@ -102,4 +160,4 @@ syntax enable
 
 " Most VimTeX mappings rely on localleader and this can be changed with the
 " following line. The default is usually fine and is the symbol "\".
-let maplocalleader = ","
+let maplocalleader = ','
