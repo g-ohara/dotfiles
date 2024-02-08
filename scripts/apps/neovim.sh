@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# install neovim
+# Install Neovim
 sudo apt update && sudo apt install -y neovim
 
-# install node.js for GitHub Copilot
+# Install plugins
+nvim +PlugInstall +qall
+
+# Install Node.js for GitHub Copilot
 ./nodejs.sh
