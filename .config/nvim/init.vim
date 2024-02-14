@@ -79,6 +79,7 @@ let g:ale_fixers = {
       \ '*': ['remove_trailing_lines', 'trim_whitespace'],
       \ 'cpp': ['astyle'],
       \ 'python': ['autopep8', 'black', 'isort'],
+      \ 'tex': ['latexindent'],
       \ }
 
 " Options for fixers
