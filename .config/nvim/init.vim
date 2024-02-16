@@ -1,10 +1,18 @@
 " ----------------------------------------------------------------------------
-"  General settings
+"  Character code
 " ----------------------------------------------------------------------------
 
-" checks file's character code automatically
+" Set character code before saving (on buffer)
 set encoding=utf-8
+
+" Set character code when saving
+set fileencoding=utf-8
+
+" Check the character code of the file automatically
 set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+
+" Check the line feed code of the file automatically
+set fileformats=unix,dos,mac
 
 
 " ----------------------------------------------------------------------------
