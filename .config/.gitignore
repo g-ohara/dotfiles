@@ -5,5 +5,4 @@
 !nvim
 !nvim/*
 !nvim/*/*
-!mimeapps.list
 !flake8
