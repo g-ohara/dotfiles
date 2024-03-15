@@ -1,4 +1,6 @@
 # dotfiles
+This repository contains dotfiles and some installation scripts for my environment (Ubuntu 22.04).
+
 ## Installation
 To install this repository:
 
