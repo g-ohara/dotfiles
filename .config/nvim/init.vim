@@ -61,6 +61,14 @@ syntax on
 
 
 " ----------------------------------------------------------------------------
+"  Other settings
+" ----------------------------------------------------------------------------
+
+" Always copy yanked text to clipboard
+set clipboard=unnamedplus
+
+
+" ----------------------------------------------------------------------------
 "  Plugins
 " ----------------------------------------------------------------------------
 
@@ -69,7 +77,6 @@ Plug 'dense-analysis/ale' " Manage linters and formatters
 Plug 'itchyny/lightline.vim' " Display beautiful status line
 Plug 'maximbaz/lightline-ale' " ALE support for lightline.vim
 Plug 'github/copilot.vim' " Vim plugin for GitHub Copilot
-Plug 'lervag/vimtex' "A modern Vim and neovim filetype plugin for LaTeX files.
 call plug#end()
 
 
@@ -140,11 +147,3 @@ let g:lightline.active = {
         \ [ 'fileformat', 'fileencoding', 'filetype']
       \ ]
       \ }
-
-
-" ----------------------------------------------------------------------------
-"  lervag/vimtex
-" ----------------------------------------------------------------------------
-
-filetype plugin indent on
-let maplocalleader = ','
