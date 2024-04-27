@@ -1,5 +1,3 @@
-print("init.lua has been loaded successfully!")
-
 ------------------------------------------------------------------------------
 -- Character code
 ------------------------------------------------------------------------------
@@ -31,12 +29,16 @@ vim.opt.smartindent = true
 vim.opt.expandtab = true
 
 -- Set indentation to 2 spaces for C and C++
-vim.cmd([[
-  augroup local_indent
-    autocmd!
-    autocmd FileType c,cpp,lua,vim setlocal tabstop=2 shiftwidth=2
-  augroup END
-]])
+vim.api.nvim_create_augroup('local_indent', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  group = 'local_indent',
+  pattern = { 'c', 'cpp', 'lua', 'vim' },
+  callback = function()
+    vim.opt.tabstop = 2
+    vim.opt.shiftwidth = 2
+  end
+})
+
 
 ------------------------------------------------------------------------------
 -- Design of the editor
@@ -56,8 +58,8 @@ vim.cmd("highlight ColorColumn ctermbg=DarkGrey guibg=lightgrey")
 vim.opt.laststatus = 2
 
 -- Set color of vim terminal
-vim.opt.background = 'dark'
-vim.cmd("colorscheme industry")
+-- My favorite themes are 'desert', 'evening', 'habamax' and 'slate'
+vim.cmd[[colorscheme desert]]
 
 -- Enable syntax highlighting
 vim.opt.syntax = 'on'
@@ -67,14 +69,22 @@ vim.opt.syntax = 'on'
 -- Plugins
 ------------------------------------------------------------------------------
 
-local Plug = vim.fn['plug#']
-vim.call('plug#begin')
-Plug 'dense-analysis/ale' -- Manage linters and formatters
-Plug 'itchyny/lightline.vim' -- Display beautiful status line
-Plug 'maximbaz/lightline-ale' -- ALE support for lightline.vim
-Plug 'github/copilot.vim' -- Vim plugin for GitHub Copilot
-Plug 'Exafunction/codeium.vim'
-vim.call('plug#end')
+-- Install lazy.nvim (https://github.com/folke/lazy.nvim)
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Load plugins
+require("lazy").setup("plugins")
 
 
 ------------------------------------------------------------------------------
