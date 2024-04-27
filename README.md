@@ -1,19 +1,23 @@
 # dotfiles
-This repository contains dotfiles and some installation scripts for my environment (Ubuntu 22.04).
-
-## Installation
+My dotfiles and some setup scripts for my environment.
+## About
+Here are some details about my environment:
+|  |  |
+|--|--|
+| OS | [Ubuntu](https://ubuntu.com/) 22.04.4 |
+| Shell | /bin/bash |
+| Editor | [Neovim](https://neovim.io/) 0.9.4 |
+## Getting Started
 To clone this repository:
-```
-$ git clone https://github.com/g-ohara/dotfiles.git
+```sh
+git clone https://github.com/g-ohara/dotfiles.git
 ```
 Then create links in your home directory to dotfiles in this repository:
-```
-$ cd dotfiles
-$ ./install_links.sh
+```sh
+cd dotfiles && ./install_links.sh
 ```
 > [!WARNING]  
-> Before installing links, you should back up the original dotfiles in your device.
-
+> Before installing links, you should back up the original dotfiles in your home directory.
 ## Scripts for setup
 Some shell scripts for setup are in `scripts/apps` and `scripts/system` directories. They install some applications or set up environment.
 > [!WARNING]  
