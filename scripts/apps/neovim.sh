@@ -1,10 +1,4 @@
 #!/bin/bash
 
-# Install Neovim
-sudo apt update && sudo apt install -y neovim
-
-# Install plugins
-nvim +PlugInstall +qall
-
-# Install Node.js for GitHub Copilot
-./nodejs.sh
+# Uninstall Neovim installed via apt and install it via snap
+sudo apt purge --autoremove -y neovim && sudo snap install nvim --classic
