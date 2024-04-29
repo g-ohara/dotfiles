@@ -14,8 +14,9 @@ vim.opt.fileencodings = 'iso-2022-jp,euc-jp,sjis,utf-8'
 -- Check the line feed code of the file automatically
 vim.opt.fileformats = 'unix,dos,mac'
 
+
 ------------------------------------------------------------------------------
--- Indentation
+-- Formatting
 ------------------------------------------------------------------------------
 
 -- Set indentation to 4 spaces
@@ -39,6 +40,15 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
+-- Format automatically on save
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*',
+  group = vim.api.nvim_create_augroup('lsp_format', { clear = true }),
+  callback = function()
+    vim.lsp.buf.format()
+  end
+})
+
 
 ------------------------------------------------------------------------------
 -- Design of the editor
@@ -59,7 +69,7 @@ vim.opt.laststatus = 2
 
 -- Set color of vim terminal
 -- My favorite themes are 'desert', 'evening', 'habamax' and 'slate'
-vim.cmd[[colorscheme desert]]
+vim.cmd [[colorscheme desert]]
 
 -- Enable syntax highlighting
 vim.opt.syntax = 'on'
@@ -93,3 +103,77 @@ require("lazy").setup("plugins")
 
 -- Set lightline theme
 vim.cmd("let g:lightline = {'colorscheme': 'solarized'}")
+
+
+------------------------------------------------------------------------------
+-- neovim/nvim-lspconfig
+------------------------------------------------------------------------------
+
+local lspconfig = require("lspconfig")
+
+-- Run language servers in docker containers
+-- https://github.com/neovim/nvim-lspconfig/wiki/Running-servers-in-containers
+local root_pattern = lspconfig.util.root_pattern('.git')
+local function project_name_to_container_name()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local filename = lspconfig.util.path.is_absolute(bufname) and bufname
+      or lspconfig.util.path.join(vim.loop.cwd(), bufname)
+  local project_dirname = root_pattern(filename) or lspconfig.util.path.dirname(filename)
+  return vim.fn.fnamemodify(lspconfig.util.find_git_ancestor(project_dirname), ':t')
+end
+
+-- C/C++
+lspconfig.clangd.setup {
+  cmd = {
+    'docker',
+    'exec',
+    '-i',
+    project_name_to_container_name(),
+    'clangd',
+    '--background-index',
+  },
+}
+
+-- Lua
+lspconfig.lua_ls.setup {
+  cmd = {
+    'docker',
+    'exec',
+    '-i',
+    project_name_to_container_name(),
+    'lua-language-server',
+    '--background-index',
+  },
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+    },
+  },
+}
+
+-- Python
+lspconfig.pyright.setup {
+  cmd = {
+    'docker',
+    'exec',
+    '-i',
+    project_name_to_container_name(),
+    'pyright-langserver',
+    '--stdio',
+  },
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = 'openFilesOnly',
+      },
+    },
+  },
+  before_init = function(params)
+    params.processId = vim.NIL
+  end,
+}
