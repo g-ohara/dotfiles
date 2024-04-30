@@ -104,3 +104,28 @@ lspconfig.pyright.setup {
     params.processId = vim.NIL
   end,
 }
+
+-- TeX
+lspconfig.texlab.setup {
+  cmd = {
+    'docker',
+    'exec',
+    '-i',
+    project_name_to_container_name(),
+    'texlab',
+  },
+  settings = {
+    texlab = {
+      build = {
+        onSave = true,
+      },
+      chktex = {
+        onEdit = true,
+        onOpenAndSave = true,
+      },
+      latexindent = {
+        modifyLineBreaks = true,
+      },
+    },
+  },
+}
