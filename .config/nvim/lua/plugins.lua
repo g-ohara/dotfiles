@@ -18,19 +18,27 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load plugins
 require("lazy").setup({
-  'itchyny/lightline.vim',
+  'nvim-lualine/lualine.nvim',
   'Exafunction/codeium.vim',
   'neovim/nvim-lspconfig',
 })
 
 
 ------------------------------------------------------------------------------
--- itchyny/lightline.vim
+-- nvim-lualine/lualine.nvim
 ------------------------------------------------------------------------------
 
--- Set lightline theme
-vim.cmd("let g:lightline = {'colorscheme': 'solarized'}")
-
+require('lualine').setup {
+  options = {
+    component_separators = '',
+    section_separators = '',
+  },
+  sections = {
+    lualine_b = { 'filename' },
+    lualine_c = {},
+    lualine_x = { 'encoding' },
+  },
+}
 
 ------------------------------------------------------------------------------
 -- neovim/nvim-lspconfig
