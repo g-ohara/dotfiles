@@ -104,6 +104,21 @@ lspconfig.pyright.setup {
     params.processId = vim.NIL
   end,
 }
+vim.api.nvim_create_autocmd(
+  "BufWritePost",
+  {
+    pattern = "*.py",
+    group = vim.api.nvim_create_augroup("AutoFormat", {}),
+    callback = function()
+      vim.cmd(
+        "silent !docker exec -i "
+        .. project_name_to_container_name()
+        .. " black --quiet %"
+      )
+      vim.cmd("edit")
+    end,
+  }
+)
 
 -- TeX
 lspconfig.texlab.setup {
