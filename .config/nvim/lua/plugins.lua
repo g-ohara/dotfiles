@@ -97,6 +97,8 @@ lspconfig.pyright.setup {
     'exec',
     '-i',
     project_name_to_container_name(),
+    'rye',
+    'run',
     'pyright-langserver',
     '--stdio',
   },
