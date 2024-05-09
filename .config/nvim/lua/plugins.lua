@@ -70,6 +70,9 @@ lspconfig.clangd.setup {
   },
 }
 
+-- Javascript/Typescript
+lspconfig.tsserver.setup {}
+
 -- Lua
 lspconfig.lua_ls.setup {
   cmd = {
@@ -115,7 +118,7 @@ vim.api.nvim_create_autocmd(
       vim.cmd(
         "silent !docker exec -i "
         .. project_name_to_container_name()
-        .. " black --quiet %"
+        .. " rye run black --quiet %"
       )
       vim.cmd("edit")
     end,
