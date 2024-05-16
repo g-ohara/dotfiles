@@ -2,9 +2,9 @@
 -- Formatting
 ------------------------------------------------------------------------------
 
--- Set indentation to 4 spaces
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+-- Set indentation to 2 spaces
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 
 -- Insert indents automatically when starting a new line
 vim.opt.smartindent = true
@@ -16,10 +16,10 @@ vim.opt.expandtab = true
 vim.api.nvim_create_augroup('local_indent', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
   group = 'local_indent',
-  pattern = { 'c', 'cpp', 'lua', 'vim' },
+  pattern = { 'python' },
   callback = function()
-    vim.opt.tabstop = 2
-    vim.opt.shiftwidth = 2
+    vim.opt.tabstop = 4
+    vim.opt.shiftwidth = 4
   end
 })
 

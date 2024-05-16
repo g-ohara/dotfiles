@@ -137,6 +137,7 @@ lspconfig.texlab.setup {
   settings = {
     texlab = {
       build = {
+        args = {},
         onSave = true,
       },
       chktex = {
@@ -144,7 +145,7 @@ lspconfig.texlab.setup {
         onOpenAndSave = true,
       },
       latexindent = {
-        modifyLineBreaks = true,
+        args = {'-l'},
       },
     },
   },
