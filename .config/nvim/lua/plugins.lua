@@ -120,6 +120,13 @@ vim.api.nvim_create_autocmd(
         .. project_name_to_container_name()
         .. " rye run black --quiet %"
       )
+      -- isort in Docker container does work but change the owner and group of
+      -- the file to root.
+      vim.cmd(
+        "silent !docker exec -i "
+        .. project_name_to_container_name()
+        .. " rye run isort --overwrite-in-place --quiet %"
+      )
       vim.cmd("edit")
     end,
   }
@@ -145,7 +152,7 @@ lspconfig.texlab.setup {
         onOpenAndSave = true,
       },
       latexindent = {
-        args = {'-l'},
+        args = { '-l' },
       },
     },
   },
