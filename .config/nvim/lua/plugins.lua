@@ -70,6 +70,19 @@ lspconfig.clangd.setup {
   },
 }
 
+-- Haskell
+lspconfig.hls.setup {
+  cmd = {
+    'docker',
+    'exec',
+    '-i',
+    project_name_to_container_name(),
+    'haskell-language-server',
+    '--lsp',
+  },
+  root_dir = root_pattern('.git', "hie.yaml", "stack.yaml", "cabal.project", "*.cabal", "package.yaml")
+}
+
 -- Javascript/Typescript
 lspconfig.tsserver.setup {}
 
