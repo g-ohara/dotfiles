@@ -80,7 +80,7 @@ lspconfig.hls.setup {
     'haskell-language-server',
     '--lsp',
   },
-  root_dir = root_pattern('.git', "hie.yaml", "stack.yaml", "cabal.project", "*.cabal", "package.yaml")
+  root_dir = root_pattern
 }
 
 -- Javascript/Typescript
