@@ -2,6 +2,12 @@
 -- This file configures general settings for Neovim
 
 
+-- Disable providers
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 -- Save undo history
 vim.opt.undofile = true
 
