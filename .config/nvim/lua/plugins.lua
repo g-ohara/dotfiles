@@ -83,7 +83,12 @@ lspconfig.hls.setup {
     'haskell-language-server',
     '--lsp',
   },
-  root_dir = root_pattern
+  root_dir = root_pattern,
+  settings = {
+    haskell = {
+      formattingProvider = "fourmolu",
+    },
+  },
 }
 
 -- Javascript/Typescript
