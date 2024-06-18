@@ -133,7 +133,7 @@ lspconfig.pyright.setup {
 vim.api.nvim_create_autocmd(
   "BufWritePost",
   {
-    pattern = "*.py",
+    pattern = { "*.py", "*.pyi" },
     group = vim.api.nvim_create_augroup("AutoFormat", {}),
     callback = function()
       vim.cmd(
@@ -161,6 +161,14 @@ lspconfig.texlab.setup {
     'texlab',
   },
   filetypes = { 'tex', 'lhaskell', 'plaintex', 'bibtex' },
+  root_dir = lspconfig.util.root_pattern(
+    'latexmkrc',
+    '.git',
+    '.latexmkrc',
+    '.texlabroot',
+    'texlabroot',
+    'Tectonic.toml'
+  ),
   settings = {
     texlab = {
       build = {
