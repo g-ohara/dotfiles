@@ -5,6 +5,7 @@
 !nvim
 !nvim/*
 !nvim/*/*
+!nvim/*/*/*
 !flake8
 !mypy/
 !mypy/*
