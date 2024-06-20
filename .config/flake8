@@ -1,3 +1,0 @@
-[flake8]
-# E203: whitespace before ':'
-extend-ignore = E203
