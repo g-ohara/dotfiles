@@ -22,3 +22,17 @@ cd dotfiles && ./install_links.sh
 Some shell scripts for setup are in `scripts/apps` and `scripts/system` directories. They install some applications or set up environment.
 > [!WARNING]  
 > Running these scripts is not recommended because they are customized for personal use. If you absolutely must run these scripts, please read them carefully.
+## Details
+### Dotfiles
+|File Path (`~/***`)|Details|
+|---|---|
+|`.aliases`|CLI command aliases.|
+|`.bash_profile`|Loaded once at login.|
+|`.bashrc`|Loaded when shell starts or `.bash_profile` is loaded.|
+|`.colorrc`|Color configs for `dircolors`.|
+#### Configs for Neovim
+|File Path (`~/.config/nvim/***`)|Details|
+|---|---|
+|`init.lua`|Loads some files in `~/.config/nvim/lua/`|
+|`lua/*.lua`|Config files for Neovim, which is loaded by `init.lua`.|
+|`after/syntax/*.vim`|Syntax files for built-in semantic highlight.|
