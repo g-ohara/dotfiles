@@ -1,11 +1,15 @@
--- Configure general settings
+-- General settings
 require('general')
 
--- Configure design of editor
-require('design')
-
--- Configure indentation
-require('indent')
-
--- Load and configure plugins
+-- Plugins
 require('plugins')
+
+-- For each filetype
+local home = os.getenv('HOME')
+package.path = home .. '/.config/nvim/lua/filetype/?.lua;' .. package.path
+require("c")
+require("haskell")
+require("lua")
+require("python")
+require("tex")
+require("typescript")

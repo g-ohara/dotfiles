@@ -22,3 +22,31 @@ vim.api.nvim_create_autocmd(
     end
   }
 )
+
+-- Visually indent wrapped lines
+vim.opt.breakindent = true
+
+-- Set column lign at 80 characters by default
+vim.opt.colorcolumn = "80"
+
+-- Display underline for cursor line
+vim.opt.cursorline = true
+
+-- Set line number
+vim.opt.number = true
+
+-- Not show mode since it is already shown by lualine
+vim.opt.showmode = false
+
+-- Enable syntax highlighting
+vim.opt.syntax = "on"
+
+-- Set indentation to 2 spaces by default
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+
+-- Insert indents automatically when starting a new line
+vim.opt.smartindent = true
+
+-- Only use spaces for indentation (no tabs)
+vim.opt.expandtab = true
