@@ -1,1 +1,1 @@
-docker compose up -d pyright && docker compose exec pyright rye $@
+docker compose run --rm rye rye $@

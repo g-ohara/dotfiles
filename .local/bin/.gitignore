@@ -5,6 +5,7 @@
 !cabal
 !clangd
 !haskell-language-server-wrapper
+!lua-language-server
 !pyright-langserver
 !rye
 !texlab

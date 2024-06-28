@@ -55,7 +55,6 @@ lspconfig.clangd.setup {}
 
 -- Haskell
 lspconfig.hls.setup {
-  root_dir = lspconfig.util.root_pattern('.git'),
   settings = {
     haskell = {
       formattingProvider = "fourmolu",
@@ -68,15 +67,6 @@ lspconfig.tsserver.setup {}
 
 -- Lua
 lspconfig.lua_ls.setup {
-  cmd = {
-    'docker',
-    'compose',
-    'run',
-    '--rm',
-    'lua_ls',
-    'lua-language-server',
-    '--background-index',
-  },
   settings = {
     Lua = {
       diagnostics = {
@@ -99,12 +89,7 @@ vim.api.nvim_create_autocmd(
     pattern = { "*.py", "*.pyi" },
     group = vim.api.nvim_create_augroup("AutoFormat", {}),
     callback = function()
-      vim.cmd(
-        "silent !docker compose run --rm pyright rye run black --quiet %"
-      )
-      vim.cmd(
-        "silent !docker compose run --rm pyright rye run isort --overwrite-in-place --quiet %"
-      )
+      vim.cmd("silent !rye fmt %")
       vim.cmd("edit")
     end,
   }

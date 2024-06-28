@@ -1,1 +1,1 @@
-rye run pyright-langserver $@
+docker compose run --rm pyright pyright-langserver $@

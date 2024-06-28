@@ -21,6 +21,12 @@ services:
     working_dir: ${PWD}
     tty: true
   pyright:
+    image: lspcontainers/pyright-langserver
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true
+  rye:
     image: genjiohara/rye
     volumes:
       - ${PWD}:${PWD}
