@@ -51,29 +51,10 @@ require('lualine').setup {
 local lspconfig = require("lspconfig")
 
 -- C/C++
-lspconfig.clangd.setup {
-  cmd = {
-    'docker',
-    'compose',
-    'run',
-    '--rm',
-    'clangd',
-    'clangd',
-    '--background-index',
-  },
-}
+lspconfig.clangd.setup {}
 
 -- Haskell
 lspconfig.hls.setup {
-  cmd = {
-    'docker',
-    'compose',
-    'run',
-    '--rm',
-    'hls',
-    'haskell-language-server',
-    '--lsp',
-  },
   root_dir = lspconfig.util.root_pattern('.git'),
   settings = {
     haskell = {
@@ -108,17 +89,6 @@ lspconfig.lua_ls.setup {
 
 -- Python
 lspconfig.pyright.setup {
-  cmd = {
-    'docker',
-    'compose',
-    'run',
-    '--rm',
-    'pyright',
-    'rye',
-    'run',
-    'pyright-langserver',
-    '--stdio',
-  },
   before_init = function(params)
     params.processId = vim.NIL
   end,
@@ -142,7 +112,6 @@ vim.api.nvim_create_autocmd(
 
 -- TeX, Literate Haskell, Plain TeX, BibTeX
 lspconfig.texlab.setup {
-  cmd = { 'docker', 'compose', 'run', '--rm', 'texlab', 'texlab' },
   filetypes = { 'tex', 'lhaskell', 'plaintex', 'bibtex' },
   root_dir = lspconfig.util.root_pattern(
     'latexmkrc',

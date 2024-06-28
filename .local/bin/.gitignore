@@ -1,0 +1,9 @@
+*
+*/
+
+!.gitignore
+!cabal
+!clangd
+!haskell-language-server-wrapper
+!pyright-langserver
+!rye
