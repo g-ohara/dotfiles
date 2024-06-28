@@ -50,24 +50,14 @@ require('lualine').setup {
 
 local lspconfig = require("lspconfig")
 
--- Run language servers in docker containers
--- https://github.com/neovim/nvim-lspconfig/wiki/Running-servers-in-containers
-local root_pattern = lspconfig.util.root_pattern('.git')
-local function project_name_to_container_name(server_name)
-  local bufname = vim.api.nvim_buf_get_name(0)
-  local filename = lspconfig.util.path.is_absolute(bufname) and bufname
-      or lspconfig.util.path.join(vim.loop.cwd(), bufname)
-  local project_dirname = root_pattern(filename) or lspconfig.util.path.dirname(filename)
-  return vim.fn.fnamemodify(lspconfig.util.find_git_ancestor(project_dirname), ':t') .. "-" .. server_name
-end
-
 -- C/C++
 lspconfig.clangd.setup {
   cmd = {
     'docker',
-    'exec',
-    '-i',
-    project_name_to_container_name("clangd"),
+    'compose',
+    'run',
+    '--rm',
+    'clangd',
     'clangd',
     '--background-index',
   },
@@ -77,13 +67,14 @@ lspconfig.clangd.setup {
 lspconfig.hls.setup {
   cmd = {
     'docker',
-    'exec',
-    '-i',
-    project_name_to_container_name("hls"),
+    'compose',
+    'run',
+    '--rm',
+    'hls',
     'haskell-language-server',
     '--lsp',
   },
-  root_dir = root_pattern,
+  root_dir = lspconfig.util.root_pattern('.git'),
   settings = {
     haskell = {
       formattingProvider = "fourmolu",
@@ -98,9 +89,10 @@ lspconfig.tsserver.setup {}
 lspconfig.lua_ls.setup {
   cmd = {
     'docker',
-    'exec',
-    '-i',
-    project_name_to_container_name("lua_ls"),
+    'compose',
+    'run',
+    '--rm',
+    'lua_ls',
     'lua-language-server',
     '--background-index',
   },
@@ -118,9 +110,10 @@ lspconfig.lua_ls.setup {
 lspconfig.pyright.setup {
   cmd = {
     'docker',
-    'exec',
-    '-i',
-    project_name_to_container_name("pyright"),
+    'compose',
+    'run',
+    '--rm',
+    'pyright',
     'rye',
     'run',
     'pyright-langserver',
@@ -137,14 +130,10 @@ vim.api.nvim_create_autocmd(
     group = vim.api.nvim_create_augroup("AutoFormat", {}),
     callback = function()
       vim.cmd(
-        "silent !docker exec -i "
-        .. project_name_to_container_name("pyright")
-        .. " rye run black --quiet %"
+        "silent !docker compose run --rm pyright rye run black --quiet %"
       )
       vim.cmd(
-        "silent !docker exec -i "
-        .. project_name_to_container_name("pyright")
-        .. " rye run isort --overwrite-in-place --quiet %"
+        "silent !docker compose run --rm pyright rye run isort --overwrite-in-place --quiet %"
       )
       vim.cmd("edit")
     end,
@@ -153,13 +142,7 @@ vim.api.nvim_create_autocmd(
 
 -- TeX, Literate Haskell, Plain TeX, BibTeX
 lspconfig.texlab.setup {
-  cmd = {
-    'docker',
-    'exec',
-    '-i',
-    project_name_to_container_name("texlab"),
-    'texlab',
-  },
+  cmd = { 'docker', 'compose', 'run', '--rm', 'texlab', 'texlab' },
   filetypes = { 'tex', 'lhaskell', 'plaintex', 'bibtex' },
   root_dir = lspconfig.util.root_pattern(
     'latexmkrc',

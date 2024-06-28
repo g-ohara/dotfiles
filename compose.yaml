@@ -1,0 +1,34 @@
+services:
+  clangd:
+    image: lspcontainers/clangd-language-server
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true
+  hls:
+    image: genjiohara/haskell-language-server
+    container_name: haskell-pso-hls
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    environment:
+      - CABAL_DIR=${PWD}/.cabal
+    tty: true
+  lua_ls:
+    image: lspcontainers/lua-language-server
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true
+  pyright:
+    image: genjiohara/rye
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true
+  texlab:
+    image: genjiohara/texlab
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true

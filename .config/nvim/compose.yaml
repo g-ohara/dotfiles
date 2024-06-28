@@ -1,5 +1,0 @@
-services:
-  lua_ls:
-    image: lspcontainers/lua-language-server
-    container_name: dotfiles-lua_ls
-    tty: true
