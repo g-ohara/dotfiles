@@ -4,12 +4,12 @@ if test -r ~/.bashrc; then
 fi
 
 # hide mouse cursor
-if command -v unclutter; then
-    unclutter -idle 3 &
+if command -v unclutter &> /dev/null
+then
+  unclutter -idle 3 &
+else
+  echo "unclutter command not found"
 fi
-
-# Use NeoVim in gh command such as 'gh issue create'
-export VIM_EDITOR=nvim
 
 # Disable dash-to-dock
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
