@@ -5,6 +5,12 @@ services:
       - ${PWD}:${PWD}
     working_dir: ${PWD}
     tty: true
+  gnuplot:
+    image: genjiohara/gnuplot
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true
   hls:
     image: genjiohara/haskell-language-server
     container_name: haskell-pso-hls

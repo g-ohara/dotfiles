@@ -5,6 +5,7 @@
 !cabal
 !clangd
 !haskell-language-server-wrapper
+!gnuplot
 !lua-language-server
 !pyright-langserver
 !rye
