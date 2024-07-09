@@ -13,6 +13,7 @@ vim.api.nvim_create_autocmd(
     group = vim.api.nvim_create_augroup("AutoFormat", {}),
     callback = function()
       vim.cmd("silent !rye fmt %")
+      vim.cmd("silent !rye lint --fix %")
       vim.cmd("edit")
     end,
   }
