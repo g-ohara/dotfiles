@@ -62,7 +62,8 @@ fi
 
 # Import .colorrc to set color of strings when ls command executed
 if [[ -x /usr/bin/dircolors ]] && [[ -r ~/.colorrc ]]; then
-  dircolors ~/.colorrc &> /dev/null
+  colors="$(dircolors ~/.colorrc)"
+  eval "${colors}"
 fi
 
 # Set background color of terminal (set RGB following '#' in hexadecimal form)
