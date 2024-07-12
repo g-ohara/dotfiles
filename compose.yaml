@@ -26,8 +26,8 @@ services:
       - ${PWD}:${PWD}
     working_dir: ${PWD}
     tty: true
-  node:
-    image: node:22.4.1-slim
+  node-tsserver:
+    image: genjiohara/node-tsserver
     volumes:
       - ${PWD}:${PWD}
     working_dir: ${PWD}

@@ -12,3 +12,4 @@
 !pyright-langserver
 !rye
 !texlab
+!typescript-language-server
