@@ -1,11 +1,14 @@
+#!/bin/bash
+# shellcheck enable=all
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
 # If not running interactively, don't do anything
 case $- in
-*i*) ;;
-*) return ;;
+  *i*) ;;
+  *) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -28,38 +31,38 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+if [[ -x /usr/bin/lesspipe ]]; then SHELL=/bin/sh lesspipe &> /dev/null; fi
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+if [[ -z ${debian_chroot:-} ]] && [[ -r /etc/debian_chroot ]]; then
   debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm* | rxvt*)
-  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-  ;;
-*) ;;
+case "${TERM}" in
+  xterm* | rxvt*)
+    PS1="\[\e]0;${debian_chroot:+(${debian_chroot})}\u@\h: \w\a\]${PS1}"
+    ;;
+  *) ;;
 esac
 
 # -----------------------------------------------------------------------------
 
 # Set prompt color
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
 else
   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 
 # Export an environment variable 'SHELL' to run dircolors without errors
-if [ -n "$SHELL" ]; then
+if [[ -n ${SHELL} ]]; then
   export SHELL
 fi
 
 # Import .colorrc to set color of strings when ls command executed
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.colorrc && eval "$(dircolors ~/.colorrc)"
+if [[ -x /usr/bin/dircolors ]] && [[ -r ~/.colorrc ]]; then
+  dircolors ~/.colorrc &> /dev/null
 fi
 
 # Set background color of terminal (set RGB following '#' in hexadecimal form)
@@ -71,8 +74,8 @@ echo -e "\033]11;#000000\a"
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.aliases ]; then
-  . "$HOME"/.aliases
+if [[ -f ~/.aliases ]]; then
+  . "${HOME}"/.aliases
 fi
 
-export PATH=$PATH:$HOME/.local/bin
+export PATH=${PATH}:${HOME}/.local/bin

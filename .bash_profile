@@ -1,10 +1,13 @@
+#!/bin/bash
+# shellcheck enable=all
+
 # execute .bashrc if it exists and can be read
 if test -r ~/.bashrc; then
-  . "$HOME"/.bashrc
+  . "${HOME}"/.bashrc
 fi
 
 # hide mouse cursor
-if command -v unclutter &>/dev/null; then
+if command -v unclutter &> /dev/null; then
   unclutter -idle 3 &
 else
   echo "unclutter command not found"
