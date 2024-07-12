@@ -1,4 +1,10 @@
 services:
+  bashls:
+    image: genjiohara/bashls
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true
   clangd:
     image: lspcontainers/clangd-language-server
     volumes:

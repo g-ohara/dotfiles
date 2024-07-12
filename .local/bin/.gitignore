@@ -2,6 +2,7 @@
 */
 
 !.gitignore
+!bash-language-server
 !cabal
 !clangd
 !haskell-language-server-wrapper
