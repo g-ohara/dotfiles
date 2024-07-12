@@ -26,6 +26,12 @@ services:
       - ${PWD}:${PWD}
     working_dir: ${PWD}
     tty: true
+  node:
+    image: node:22.4.1-slim
+    volumes:
+      - ${PWD}:${PWD}
+    working_dir: ${PWD}
+    tty: true
   pyright:
     image: lspcontainers/pyright-langserver
     volumes:
