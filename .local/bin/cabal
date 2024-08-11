@@ -1,1 +1,1 @@
-docker compose run --rm hls cabal $@
+docker compose run --rm cabal cabal $@

@@ -17,11 +17,14 @@ services:
   gnuplot:
     image: genjiohara/gnuplot
     extends: common
-  hls:
-    image: genjiohara/haskell-language-server
+  cabal:
+    image: genjiohara/cabal
     environment:
       - CABAL_DIR=${PWD}/.cabal
     extends: common
+  hls:
+    image: genjiohara/hls
+    extends: cabal
   lua_ls:
     image: lspcontainers/lua-language-server
     extends: common
