@@ -1,58 +1,39 @@
 services:
+  common:
+    image: scratch
+    volumes:
+      - ${PWD}:${PWD}
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+    working_dir: ${PWD}
+    user: ${UID}:${GID}
+    tty: true
   bashls:
     image: genjiohara/bashls
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common
   clangd:
     image: lspcontainers/clangd-language-server
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common
   gnuplot:
     image: genjiohara/gnuplot
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common
   hls:
     image: genjiohara/haskell-language-server
-    container_name: haskell-pso-hls
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
     environment:
       - CABAL_DIR=${PWD}/.cabal
-    tty: true
+    extends: common
   lua_ls:
     image: lspcontainers/lua-language-server
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common
   node-tsserver:
     image: genjiohara/node-tsserver
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common
   pyright:
     image: lspcontainers/pyright-langserver
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common
   rye:
     image: genjiohara/rye
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common
   texlab:
     image: genjiohara/texlab
-    volumes:
-      - ${PWD}:${PWD}
-    working_dir: ${PWD}
-    tty: true
+    extends: common

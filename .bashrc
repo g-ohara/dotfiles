@@ -80,3 +80,11 @@ if [[ -f ~/.aliases ]]; then
 fi
 
 export PATH=${PATH}:${HOME}/.local/bin
+
+# -----------------------------------------------------------------------------
+
+# Define and export environment variables for Docker Compose to recognize the
+# current user and group.
+# NOTE: It seems that $UID is already defined but not exported by default.
+GID=$(id -g)
+export UID GID
