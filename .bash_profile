@@ -19,3 +19,7 @@ gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
 
 # Remove home folder icon from desktop
 gsettings set org.gnome.shell.extensions.ding show-home false
+gsettings set org.gnome.shell.extensions.ding show-trash false
+
+# Remove icons in home directory from desktop
+gnome-extensions disable ding@rastersoft.com
