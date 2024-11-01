@@ -1,8 +1,10 @@
-# Dockerfiles
+### .dockerfiles
+
 Dockerfiles for [my docker images](https://hub.docker.com/u/genjiohara).
-## Details of Images
+
 |Image Name|Base Image|Installed Package(s)|Pull Count|
 |:--|:--|:--|:-:|
+|[genjiohara/bashls](https://hub.docker.com/repository/docker/genjiohara/gnuplot/general)|[ubuntu](https://hub.docker.com/_/ubuntu)|[gnuplot](https://gnuplot.sourceforge.net/)<br>gnuplot-x11|![pull count for gnuplot](https://img.shields.io/docker/pulls/genjiohara/gnuplot.svg)|
 |[genjiohara/gnuplot](https://hub.docker.com/repository/docker/genjiohara/gnuplot/general)|[ubuntu](https://hub.docker.com/_/ubuntu)|[gnuplot](https://gnuplot.sourceforge.net/)<br>gnuplot-x11|![pull count for gnuplot](https://img.shields.io/docker/pulls/genjiohara/gnuplot.svg)|
 |[genjiohara/graphviz](https://hub.docker.com/repository/docker/genjiohara/graphviz/general)|ubuntu|[graphviz](https://graphviz.org/)|![pull count for graphviz](https://img.shields.io/docker/pulls/genjiohara/graphviz.svg)|
 |[genjiohara/haskell-language-server](https://hub.docker.com/repository/docker/genjiohara/haskell-language-server/general)|[haskell](https://hub.docker.com/_/haskell/):9.8.2-buster|[Haskell Language Server](https://github.com/haskell/haskell-language-server)|![pull count for haskell-language-server](https://img.shields.io/docker/pulls/genjiohara/haskell-language-server.svg)|
