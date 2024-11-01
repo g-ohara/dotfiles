@@ -2,5 +2,6 @@
 */
 
 !.gitignore
+!README.md
 !user-dirs.dirs
 !nvim/
