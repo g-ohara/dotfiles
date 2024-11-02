@@ -16,10 +16,9 @@ vim.api.nvim_create_autocmd(
   "BufWritePre",
   {
     group = vim.api.nvim_create_augroup("lsp_format", {}),
-    pattern = "*",
     callback = function()
       vim.lsp.buf.format()
-    end
+    end,
   }
 )
 
@@ -50,3 +49,15 @@ vim.opt.smartindent = true
 
 -- Only use spaces for indentation (no tabs)
 vim.opt.expandtab = true
+
+-- Automatically pop up diagnostics window
+vim.api.nvim_set_option('updatetime', 500)
+vim.api.nvim_create_autocmd(
+  "CursorHold",
+  {
+    group = vim.api.nvim_create_augroup("diagnostic", {}),
+    callback = function()
+      vim.diagnostic.open_float()
+    end,
+  }
+)
