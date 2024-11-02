@@ -24,6 +24,7 @@ require("lazy").setup(
     'nvim-lualine/lualine.nvim',
     'Exafunction/codeium.vim',
     'neovim/nvim-lspconfig',
+    'lewis6991/gitsigns.nvim',
   }
 )
 
@@ -38,8 +39,27 @@ require('lualine').setup {
     section_separators = '',
   },
   sections = {
-    lualine_b = { 'filename' },
-    lualine_c = {},
+    lualine_b = {
+      {
+        'branch',
+        icon = '',
+      },
+      {
+        'diff',
+      },
+      {
+        'diagnostics',
+        symbols = { error = 'E:', warn = 'W:', info = 'I:', hint = 'H:' },
+      },
+    },
+    lualine_c = { 'filename' },
     lualine_x = { 'encoding' },
   },
 }
+
+
+------------------------------------------------------------------------------
+-- lewis6991/gitsigns.nvim
+------------------------------------------------------------------------------
+
+require('gitsigns').setup()
