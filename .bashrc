@@ -79,6 +79,17 @@ if [[ -f ~/.aliases ]]; then
   . "${HOME}"/.aliases
 fi
 
+if ! [[ -f ~/.git-completion.bash ]]; then
+  echo "Downloading git-completion.bash..."
+  curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+fi
+
+if [[ -f ~/.git-completion.bash ]]; then
+  . "${HOME}"/.git-completion.bash
+else
+  echo "ERROR: git-completion.bash not found"
+fi
+
 export PATH=${PATH}:${HOME}/.local/bin
 
 # -----------------------------------------------------------------------------
