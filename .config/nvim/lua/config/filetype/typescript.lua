@@ -1,6 +1,6 @@
 -- Javascript/Typescript
 
-require('lspconfig').tsserver.setup {
+require('lspconfig').ts_ls.setup {
   before_init = function(params)
     params.processId = vim.NIL
   end,

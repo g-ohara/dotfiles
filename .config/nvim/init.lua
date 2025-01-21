@@ -1,12 +1,12 @@
 -- General settings
-require('general')
+require("config.general")
 
 -- Plugins
-require('plugins')
+require("config.lazy")
 
 -- For each filetype
 local home = os.getenv('HOME')
-package.path = home .. '/.config/nvim/lua/filetype/?.lua;' .. package.path
+package.path = home .. '/.config/nvim/lua/config/filetype/?.lua;' .. package.path
 require("sh")
 require("c")
 require("haskell")
