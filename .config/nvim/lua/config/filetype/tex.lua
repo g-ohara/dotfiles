@@ -3,7 +3,7 @@
 local lspconfig = require('lspconfig')
 
 lspconfig.texlab.setup {
-  filetypes = { 'tex', 'lhaskell', 'plaintex', 'bibtex' },
+  filetypes = { 'tex', 'lhaskell', 'plaintex', 'bib' },
   root_dir = lspconfig.util.root_pattern(
     'latexmkrc',
     '.git',
