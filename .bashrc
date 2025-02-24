@@ -92,6 +92,13 @@ fi
 
 export PATH=${PATH}:${HOME}/.local/bin
 
+# Set neovim as default editor for
+# - git
+# - pass
+# and other commands.
+export EDITOR=nvim
+export VISUAL=nvim
+
 # -----------------------------------------------------------------------------
 
 # Define and export environment variables for Docker Compose to recognize the
