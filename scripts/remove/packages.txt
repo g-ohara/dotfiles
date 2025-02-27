@@ -1,0 +1,6 @@
+# LibreOffice
+libreoffice
+
+# Passwords and Keys
+seahorse
+
