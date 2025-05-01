@@ -96,8 +96,18 @@ export PATH=${PATH}:${HOME}/.local/bin
 # - git
 # - pass
 # and other commands.
-export EDITOR=nvim
-export VISUAL=nvim
+if hash nvim &> /dev/null; then
+  export EDITOR=nvim
+  export VISUAL=nvim
+elif hash vim &> /dev/null; then
+  export EDITOR=vim
+  export VISUAL=vim
+elif hash vi &> /dev/null; then
+  export EDITOR=vi
+  export VISUAL=vi
+else
+  echo "ERROR: vi not found"
+fi
 
 # -----------------------------------------------------------------------------
 
