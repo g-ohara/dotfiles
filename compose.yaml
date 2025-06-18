@@ -35,8 +35,10 @@ services:
     image: lspcontainers/pyright-langserver
     extends: common
   rye:
-    image: genjiohara/rye
+    image: genjiohara/rye:0.43.0
     extends: common
+    volumes:
+      - ${HOME}/.cache:${HOME}/.cache
   texlab:
     image: genjiohara/texlab
     extends: common
