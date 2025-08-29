@@ -149,6 +149,35 @@ The instructions below are almost following [official installation guide](https:
    reboot
    ```
 
+## Setup
+
+### Connecting to Network [^3]
+
+1. Start NetworkManager:
+   ```sh
+   systemctl start NetworkManager
+   ```
+1. Check the list of SSID:
+   ```sh
+   nmcli device wifi
+   ```
+1. Connect to WiFi:
+   ```sh
+   nmcli device wifi connect {SSID} password {password}
+   ```
+1. Set IP address and default gateway and reconnect (only when not using DHCP) [^4]:
+   ```sh
+   nmcli connection modify {SSID} ipv4.addresses "{IP address}/{length of subnet mask}"
+   nmcli connection modify {SSID} ipv4.gateway "{gateway address}"
+   nmcli connection down {SSID}
+   nmcli connection up {SSID}
+   ```
+1. Check connection:
+   ```sh
+   ping ping.archlinux.org
+   ```
+
 [^1]: https://wiki.archlinux.org/title/USB_flash_installation_medium#Using_basic_command_line_utilities
 [^2]: https://wiki.archlinux.org/title/Iwd#iwctl
 [^3]: https://zenn.dev/ama_nenee/articles/6d7d145044b035
+[^4]: https://qiita.com/mtn_kt/items/633bd5e3e00732af564e
