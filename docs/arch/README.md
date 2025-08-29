@@ -95,6 +95,8 @@ The instructions below are almost following [official installation guide](https:
    pacstrap -K /mnt base linux linux-firmware btrfs-progs
    ```
 
+### Configure the system
+
 #### Fstab
 
 1. Generate an fstab file:
@@ -146,8 +148,6 @@ The instructions below are almost following [official installation guide](https:
    umount -R /mnt
    reboot
    ```
-
-### Configure the system
 
 [^1]: https://wiki.archlinux.org/title/USB_flash_installation_medium#Using_basic_command_line_utilities
 [^2]: https://wiki.archlinux.org/title/Iwd#iwctl
