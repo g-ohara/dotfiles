@@ -177,7 +177,21 @@ The instructions below are almost following [official installation guide](https:
    ping ping.archlinux.org
    ```
 
+### Git [^5]
+
+1. Install essential packages:
+   ```sh
+   pacman -Syu
+   pacman -S git openssh
+   ```
+1. Generate SSH key:
+   ```sh
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+   ```
+1. Copy your public key (`~/.ssh/id_ed25519.pub`) and add it to your GitHub account.
+
 [^1]: https://wiki.archlinux.org/title/USB_flash_installation_medium#Using_basic_command_line_utilities
 [^2]: https://wiki.archlinux.org/title/Iwd#iwctl
 [^3]: https://zenn.dev/ama_nenee/articles/6d7d145044b035
 [^4]: https://qiita.com/mtn_kt/items/633bd5e3e00732af564e
+[^5]: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
