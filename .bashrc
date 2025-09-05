@@ -105,6 +105,10 @@ else
   echo "ERROR: vi not found"
 fi
 
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
 # -----------------------------------------------------------------------------
 
 # Define and export environment variables for Docker Compose to recognize the
