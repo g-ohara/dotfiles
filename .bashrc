@@ -49,11 +49,7 @@ esac
 # -----------------------------------------------------------------------------
 
 # Set prompt color
-if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
-else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
+export PS1="\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;33m\]\w\[\e[0m\]\$ "
 
 # Export an environment variable 'SHELL' to run dircolors without errors
 if [[ -n ${SHELL} ]]; then
