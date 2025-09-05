@@ -9,8 +9,6 @@ fi
 # hide mouse cursor
 if command -v unclutter &> /dev/null; then
   unclutter -idle 3 &
-else
-  echo "unclutter command not found"
 fi
 
 # OS-specific settings
