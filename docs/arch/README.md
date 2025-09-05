@@ -190,8 +190,33 @@ The instructions below are almost following [official installation guide](https:
    ```
 1. Copy your public key (`~/.ssh/id_ed25519.pub`) and add it to your GitHub account.
 
+### Bluetooth [^6]
+
+1. Install required packages:
+   ```sh
+   pacman -S bluez bluez-utils
+   ```
+1. Start Bluetooth daemon and set it to start on boot:
+   ```sh
+   systemctl start bluetooth
+   systemctl enable bluetooth
+   ```
+1. Start interactive system:
+   ```sh
+   bluetoothctl
+   ```
+1. Scan your devices:
+   ```sh
+   [bluetooth]# scan on
+   ```
+1. Do the pairing with your target device:
+   ```sh
+   [bluetooth]# pair {MAC adress}
+   ```
+
 [^1]: https://wiki.archlinux.org/title/USB_flash_installation_medium#Using_basic_command_line_utilities
 [^2]: https://wiki.archlinux.org/title/Iwd#iwctl
 [^3]: https://zenn.dev/ama_nenee/articles/6d7d145044b035
 [^4]: https://qiita.com/mtn_kt/items/633bd5e3e00732af564e
 [^5]: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+[^6]: https://wiki.archlinux.jp/index.php/Bluetooth
