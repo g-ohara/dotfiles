@@ -1,6 +1,4 @@
--- Lua
-
-require('lspconfig').lua_ls.setup {
+return {
   settings = {
     Lua = {
       diagnostics = {

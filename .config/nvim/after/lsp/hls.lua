@@ -1,6 +1,4 @@
--- Haskell
-
-require('lspconfig').hls.setup {
+return {
   settings = {
     haskell = {
       formattingProvider = "fourmolu",

@@ -1,0 +1,7 @@
+vim.lsp.enable('bashls')
+vim.lsp.enable('clangd')
+vim.lsp.enable('hls')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('pyright')
+vim.lsp.enable('texlab')
+vim.lsp.enable('ts_ls')

@@ -1,11 +1,3 @@
--- Python
-
-require('lspconfig').pyright.setup {
-  before_init = function(params)
-    params.processId = vim.NIL
-  end,
-}
-
 vim.api.nvim_create_autocmd(
   "BufWritePost",
   {
