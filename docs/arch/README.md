@@ -210,6 +210,23 @@ The instructions below are almost following [official installation guide](https:
    ```
 1. Copy your public key (`~/.ssh/id_ed25519.pub`) and add it to your GitHub account.
 
+### Docker
+
+1. Install essential packages:
+   ```sh
+   pacman -Syu
+   pacman -S docker docker-compose
+   ```
+1. Start Docker daemon and set it to start on boot:
+   ```sh
+   systemctl start docker
+   systemctl enable docker
+   ```
+1. Add a normal user to group `docker`:
+   ```sh
+   usermod -aG docker <username>
+   ```
+   
 ### Bluetooth [^6]
 
 1. Install required packages:
