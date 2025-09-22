@@ -151,6 +151,26 @@ The instructions below are almost following [official installation guide](https:
 
 ## Setup
 
+### Creating User
+
+1. Create a new user with its home directory:
+   ```sh
+   useradd -m <username>
+   ```
+1. Set password for the new user:
+   ```sh
+   passwd <username>
+   ```
+1. Add the new user to group `wheel`:
+   ```sh
+   usermod -aG wheel <username>
+   ```
+1. Allow users in `wheel` to execute `sudo`:
+   ```sh
+   pacman -S sudo
+   visudo # Then uncomment the line for wheel
+   ```
+
 ### Connecting to Network [^3]
 
 1. Start NetworkManager:
