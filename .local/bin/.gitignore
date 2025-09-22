@@ -11,6 +11,7 @@
 !lua-language-server
 !node
 !npm
+!poetry
 !pyright-langserver
 !rye
 !texlab
