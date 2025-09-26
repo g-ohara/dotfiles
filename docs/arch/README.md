@@ -165,11 +165,19 @@ The instructions below are almost following [official installation guide](https:
    ```sh
    usermod -aG wheel <username>
    ```
-1. Allow users in `wheel` to execute `sudo`:
+1. Install `sudo`:
    ```sh
-   pacman -S sudo
-   visudo # Then uncomment the line for wheel
+   pacman -Syu && pacman -S sudo
    ```
+1. Allow users in `wheel` to execute `sudo`.
+   1. Open `/etc/sudoers`:
+      ```sh
+      visudo
+      ```
+   1. Uncomment this line (Don't delete `%`):
+      ```
+      %wheel ALL=(ALL:ALL) ALL
+      ```
 
 ### Connecting to Network [^3]
 
