@@ -2,10 +2,9 @@ vim.api.nvim_create_autocmd(
   "BufWritePost",
   {
     pattern = { "*.py", "*.pyi" },
-    group = vim.api.nvim_create_augroup("AutoFormat", {}),
     callback = function()
-      vim.cmd("silent !rye fmt %")
-      vim.cmd("silent !rye lint --fix %")
+      vim.cmd("silent !uv run ruff format %")
+      vim.cmd("silent !uv run ruff check --fix %")
       vim.cmd("edit")
     end,
   }

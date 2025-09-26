@@ -47,3 +47,12 @@ services:
   texlab:
     image: genjiohara/texlab
     extends: common
+  uv:
+    image: genjiohara/uv
+    build:
+      context: .
+      dockerfile: ./.dockerfiles/uv/Dockerfile
+    environment:
+      - UV_CACHE_DIR=${PWD}/.cache
+      - UV_PYTHON_INSTALL_DIR=${PWD}/.python
+    extends: common
