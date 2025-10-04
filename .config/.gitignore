@@ -4,4 +4,5 @@
 !.gitignore
 !README.md
 !user-dirs.dirs
+!git/
 !nvim/
