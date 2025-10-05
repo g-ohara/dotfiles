@@ -39,6 +39,11 @@ services:
   pyright:
     image: lspcontainers/pyright-langserver
     extends: common
+  rust:
+    image: rust:1.90.0-slim-bullseye
+    environment:
+      - CARGO_HOME=${PWD}/.cargo
+    extends: common
   rye:
     image: genjiohara/rye:0.43.0
     extends: common

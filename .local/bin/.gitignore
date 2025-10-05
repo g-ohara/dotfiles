@@ -4,6 +4,7 @@
 !.gitignore
 !bash-language-server
 !cabal
+!cargo
 !clangd
 !haskell-language-server-wrapper
 !gnuplot
