@@ -36,9 +36,6 @@ services:
     environment:
       - POETRY_CACHE_DIR=${PWD}/.cache
     extends: common
-  pyright:
-    image: lspcontainers/pyright-langserver
-    extends: common
   rust:
     image: rust:1.90.0-slim-bullseye
     environment:
