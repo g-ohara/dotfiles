@@ -16,8 +16,8 @@ To use these dotfiles, follow these steps:
     cd dotfiles && ./install_links.sh
     ```
 
-    > [!WARNING]
-    > This script will create symbolic links in your home directory to the files in this repository. It's highly recommended to back up your existing dotfiles before running this script.
+> [!WARNING]
+> This script will create symbolic links in your home directory to the files in this repository. It's highly recommended to back up your existing dotfiles before running this script.
 
 ## Files and Directories
 
