@@ -8,7 +8,4 @@ require("config.lazy")
 require("lsp")
 
 -- For each filetype
-local home = os.getenv('HOME')
-package.path = home .. '/.config/nvim/lua/config/filetype/?.lua;' .. package.path
-require("python")
-require("tex")
+require("config.filetype.tex")
