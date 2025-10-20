@@ -116,3 +116,11 @@ export XMODIFIERS=@im=fcitx
 # NOTE: It seems that $UID is already defined but not exported by default.
 GID=$(id -g)
 export UID GID
+
+# Use GPG Agent as SSH Agent.
+# When an SSH client (ex. `ssh`, `scp`) needs to anthenticate to a remote
+# server, it looks for the SSH_AUTH_SOCK environment variable to find the path
+# to communicate with the SSH agent. Here we set the SSH_AUTH_SOCK to the
+# socket file created by GPG Agent.
+SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+export SSH_AUTH_SOCK
