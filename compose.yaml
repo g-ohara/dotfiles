@@ -22,6 +22,14 @@ services:
     environment:
       - CABAL_DIR=${PWD}/.cabal
     extends: common
+  gh:
+    build:
+      context: ./.dockerfiles/gh
+      dockerfile: Dockerfile
+    image: gh
+    volumes:
+      - ${HOME}/.config/gh:${HOME}/.config/gh
+    extends: common
   hls:
     image: genjiohara/hls
     extends: cabal
