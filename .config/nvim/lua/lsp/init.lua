@@ -21,3 +21,27 @@ vim.api.nvim_create_autocmd(
     end,
   }
 )
+
+-- Enable completion
+vim.o.completeopt = 'menuone,noselect,popup'
+vim.lsp.config(
+  "*",
+  {
+    on_attach = function(client, bufnr)
+      vim.lsp.completion.enable(
+        true,
+        client.id,
+        bufnr,
+        {
+          autotrigger = true,
+          convert = function(item)
+            return { abbr = item.label:gsub('%b()', '') }
+          end,
+        }
+      )
+    end,
+    before_init = function(params)
+      params.processId = vim.NIL
+    end,
+  }
+)
