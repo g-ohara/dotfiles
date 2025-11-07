@@ -86,6 +86,13 @@ else
   echo "ERROR: git-completion.bash not found"
 fi
 
+# Create an empty .gitconfig file if it does not exist, such that `git config`
+# commands do not write configurations to .config/git/config by default.
+if ! [[ -f ~/.gitconfig ]]; then
+  echo "Creating empty .gitconfig..."
+  touch ~/.gitconfig
+fi
+
 export PATH=${PATH}:${HOME}/.local/bin
 
 # Set neovim as default editor for
