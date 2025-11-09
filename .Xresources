@@ -1,0 +1,9 @@
+! Set XTerm colors and font
+xterm*background: black
+xterm*foreground: white
+xterm*faceName: Fira Code:size=11
+
+! Add modern copy/paste shortcuts
+XTerm*VT100.Translations: #override \n\
+  Shift Ctrl <Key> C: copy-selection(CLIPBOARD) \n\
+  Shift Ctrl <Key> V: insert-selection(CLIPBOARD)
