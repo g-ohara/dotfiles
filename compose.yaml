@@ -37,7 +37,13 @@ services:
     image: lspcontainers/lua-language-server
     extends: common
   node-tsserver:
-    image: genjiohara/node-tsserver
+    image: node-tsserver
+    build:
+      context: ./.dockerfiles/node-tsserver/
+      dockerfile: Dockerfile
+    volumes:
+      - ${HOME}/.npm:${HOME}/.npm
+    pull_policy: never
     extends: common
   poetry:
     image: genjiohara/poetry:ubuntu
