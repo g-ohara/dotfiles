@@ -22,6 +22,15 @@ services:
     environment:
       - CABAL_DIR=${PWD}/.cabal
     extends: common
+  gemini-cli:
+    build:
+      context: ./.dockerfiles/gemini-cli
+      dockerfile: Dockerfile
+    image: gemini-cli
+    volumes:
+      - ${HOME}/.config/gemini:${HOME}/.gemini
+    pull_policy: never
+    extends: common
   gh:
     build:
       context: ./.dockerfiles/gh

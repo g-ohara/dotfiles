@@ -7,6 +7,7 @@
 !cargo
 !clangd
 !haskell-language-server-wrapper
+!gemini
 !gh
 !gnuplot
 !latexmk
