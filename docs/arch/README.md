@@ -223,7 +223,7 @@ The instructions below are almost following [official installation guide](https:
 1. Install essential packages:
    ```sh
    pacman -Syu
-   pacman -S docker docker-compose
+   pacman -S docker docker-compose docker-buildx
    ```
 1. Start Docker daemon and set it to start on boot:
    ```sh
