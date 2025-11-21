@@ -8,6 +8,9 @@ services:
     working_dir: ${PWD}
     user: ${UID}:${GID}
     tty: true
+    pull_policy: never
+    environment:
+      - COLORTERM=truecolor
   bashls:
     image: genjiohara/bashls
     extends: common
@@ -17,11 +20,6 @@ services:
   gnuplot:
     image: genjiohara/gnuplot
     extends: common
-  cabal:
-    image: genjiohara/cabal
-    environment:
-      - CABAL_DIR=${PWD}/.cabal
-    extends: common
   gemini-cli:
     build:
       context: ./.dockerfiles/gemini-cli
@@ -29,7 +27,6 @@ services:
     image: gemini-cli
     volumes:
       - ${HOME}/.config/gemini:${HOME}/.gemini
-    pull_policy: never
     extends: common
   gh:
     build:
@@ -40,7 +37,12 @@ services:
       - ${HOME}/.config/gh:${HOME}/.config/gh
     extends: common
   hls:
-    image: genjiohara/hls
+    image: hls
+    build:
+      context: ./.dockerfiles/hls/
+      dockerfile: Dockerfile
+    environment:
+      - CABAL_DIR=${PWD}/.cabal
     extends: cabal
   lua_ls:
     image: lspcontainers/lua-language-server
@@ -52,7 +54,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ${HOME}/.npm:${HOME}/.npm
-    pull_policy: never
     extends: common
   poetry:
     image: genjiohara/poetry:ubuntu
