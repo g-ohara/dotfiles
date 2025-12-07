@@ -165,9 +165,9 @@ The instructions below are almost following [official installation guide](https:
    ```sh
    usermod -aG wheel <username>
    ```
-1. Install `sudo`:
+1. Install `sudo` and editor:
    ```sh
-   pacman -Syu && pacman -S sudo
+   pacman -Syu && pacman -S sudo vi
    ```
 1. Allow users in `wheel` to execute `sudo`.
    1. Open `/etc/sudoers`:
