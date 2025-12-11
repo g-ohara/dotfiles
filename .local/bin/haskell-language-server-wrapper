@@ -1,1 +1,2 @@
-docker compose run --rm hls haskell-language-server-wrapper $@
+#!/bin/sh
+docker compose run --rm hls haskell-language-server-wrapper "$@"

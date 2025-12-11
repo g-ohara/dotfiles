@@ -1,1 +1,2 @@
-docker compose run --rm rust cargo $@
+#!/bin/sh
+docker compose run --rm rust cargo "$@"

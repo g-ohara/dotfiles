@@ -1,1 +1,2 @@
-docker compose run --rm gemini-cli gemini $@
+#!/bin/sh
+docker compose run --rm gemini-cli gemini "$@"

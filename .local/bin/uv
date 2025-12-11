@@ -1,1 +1,2 @@
-docker compose run --rm uv uv $@
+#!/bin/sh
+docker compose run --rm uv uv "$@"

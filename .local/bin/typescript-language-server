@@ -1,1 +1,2 @@
-docker compose run --rm node-tsserver typescript-language-server $@
+#!/bin/sh
+docker compose run --rm node-tsserver typescript-language-server "$@"

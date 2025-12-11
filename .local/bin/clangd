@@ -1,1 +1,2 @@
-docker compose run --rm clangd clangd $@
+#!/bin/sh
+docker compose run --rm clangd clangd "$@"

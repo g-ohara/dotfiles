@@ -1,1 +1,2 @@
-docker compose run --rm texlab latexmk $@
+#!/bin/sh
+docker compose run --rm texlab latexmk "$@"

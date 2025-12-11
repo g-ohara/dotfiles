@@ -1,1 +1,2 @@
-docker compose run --rm node-tsserver node $@
+#!/bin/sh
+docker compose run --rm node-tsserver node "$@"

@@ -1,1 +1,2 @@
-docker compose run --rm poetry poetry $@
+#!/bin/sh
+docker compose run --rm poetry poetry "$@"

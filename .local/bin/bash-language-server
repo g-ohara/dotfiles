@@ -1,1 +1,2 @@
-docker compose run --rm bashls bash-language-server $@
+#!/bin/sh
+docker compose run --rm bashls bash-language-server "$@"

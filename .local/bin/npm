@@ -1,1 +1,2 @@
-docker compose run --rm -p 3000:3000 node-tsserver npm $@
+#!/bin/sh
+docker compose run --rm -p 3000:3000 node-tsserver npm "$@"
