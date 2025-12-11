@@ -3,13 +3,11 @@ services:
     image: scratch
     volumes:
       - ${PWD}:${PWD}
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     working_dir: ${PWD}
-    user: ${UID}:${GID}
     tty: true
     pull_policy: never
     environment:
+      - HOME=${HOME}
       - COLORTERM=truecolor
   bashls:
     image: bashls
@@ -69,12 +67,10 @@ services:
       - ${HOME}/.local/share/nvim:${HOME}/.local/share/nvim
       - ${HOME}/.local/state/nvim:${HOME}/.local/state/nvim
       - ${HOME}/.local/bin:/usr/local/bin
-      - /var/run/docker.sock:/var/run/docker.sock
-    group_add:
-      - ${DOCKER_GID}
+      - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
     environment:
-      - UID=${UID}
-      - GID=${GID}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      - DOCKER_HOST=unix:///var/run/docker.sock
     extends: common
   node-tsserver:
     image: node-tsserver
