@@ -55,6 +55,27 @@ services:
     image: lspcontainers/lua-language-server
     extends: common
     pull_policy: missing
+  neovim:
+    image: neovim
+    build:
+      context: ./.dockerfiles/neovim/
+      dockerfile: Dockerfile
+    volumes:
+      - ${HOME}/compose.yaml:${HOME}/compose.yaml
+      - ${HOME}/.cache/nvim:${HOME}/.cache/nvim
+      - ${HOME}/.config/nvim:${HOME}/.config/nvim
+      - ${HOME}/.docker:${HOME}/.docker
+      - ${HOME}/.dockerfiles:${HOME}/.dockerfiles
+      - ${HOME}/.local/share/nvim:${HOME}/.local/share/nvim
+      - ${HOME}/.local/state/nvim:${HOME}/.local/state/nvim
+      - ${HOME}/.local/bin:/usr/local/bin
+      - /var/run/docker.sock:/var/run/docker.sock
+    group_add:
+      - ${DOCKER_GID}
+    environment:
+      - UID=${UID}
+      - GID=${GID}
+    extends: common
   node-tsserver:
     image: node-tsserver
     build:

@@ -12,6 +12,8 @@
 !gnuplot
 !latexmk
 !lua-language-server
+!nvim/
+!nvim/nvim
 !node
 !npm
 !poetry
