@@ -205,6 +205,17 @@ The instructions below are almost following [official installation guide](https:
    ping ping.archlinux.org
    ```
 
+### Update Pacman Mirror List
+
+1. Install essential packages (It may take for a while):
+   ```sh
+   pacman -Syu && pacman -S reflector
+   ```
+1. Update a mirror list:
+   ```
+   reflector --country <your-country> --age 24 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+   ```
+
 ### Git [^5]
 
 1. Install essential packages:
