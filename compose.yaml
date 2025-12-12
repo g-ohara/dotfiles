@@ -67,10 +67,10 @@ services:
       - ${HOME}/.local/share/nvim:${HOME}/.local/share/nvim
       - ${HOME}/.local/state/nvim:${HOME}/.local/state/nvim
       - ${HOME}/.local/bin:/usr/local/bin
-      - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
+      - ${XDG_RUNTIME_DIR}/docker.sock:${XDG_RUNTIME_DIR}/docker.sock
     environment:
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DOCKER_CONTEXT=${DOCKER_CONTEXT}
     extends: common
   node-tsserver:
     image: node-tsserver

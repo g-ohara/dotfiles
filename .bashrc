@@ -93,7 +93,7 @@ if ! [[ -f ~/.gitconfig ]]; then
   touch ~/.gitconfig
 fi
 
-export PATH=${PATH}:${HOME}/.local/bin:${HOME}/.local/bin/nvim
+export PATH=${PATH}:${HOME}/.local/bin:${HOME}/.local/bin/nvim:${HOME}/bin
 
 # Set neovim as default editor for
 # - git
@@ -123,8 +123,7 @@ export XMODIFIERS=@im=fcitx
 # NOTE: It seems that $UID is already defined but not exported by default.
 GID=$(id -g)
 export UID GID
-DOCKER_GID=$(grep docker /etc/group | cut -d: -f3)
-export DOCKER_GID
+export DOCKER_CONTEXT=rootless
 
 # Use GPG Agent as SSH Agent.
 # When an SSH client (ex. `ssh`, `scp`) needs to anthenticate to a remote
