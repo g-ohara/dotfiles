@@ -61,6 +61,7 @@ services:
     volumes:
       - ${HOME}/compose.yaml:${HOME}/compose.yaml
       - ${HOME}/.cache/nvim:${HOME}/.cache/nvim
+      - ${HOME}/.config/github-copilot:${HOME}/.config/github-copilot
       - ${HOME}/.config/nvim:${HOME}/.config/nvim
       - ${HOME}/.docker:${HOME}/.docker
       - ${HOME}/.dockerfiles:${HOME}/.dockerfiles

@@ -1,2 +1,2 @@
-FROM alpine
-RUN apk add neovim git docker-cli docker-cli-compose
+FROM alpine:3.23.0
+RUN apk add neovim docker-cli docker-cli-compose git nodejs
