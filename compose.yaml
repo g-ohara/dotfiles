@@ -1,6 +1,7 @@
 services:
   common:
     image: scratch
+    user: root
     volumes:
       - ${PWD}:${PWD}
     working_dir: ${PWD}
