@@ -2,15 +2,9 @@
 
 This repository contains the personal dotfiles for [g-ohara](https://github.com/g-ohara). These files are used to configure the shell, editor, and other tools to create a consistent development environment.
 
-## Docs List
-
-### Linux setup
+## Linux Setup
 
 * [Arch Linux](docs/arch)
-
-### Security
-
-* [GPG-Agent](.gnupg)
 
 ## Getting Started
 

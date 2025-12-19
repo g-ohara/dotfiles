@@ -14,6 +14,15 @@ server containers required to build a development environment for a given file.
 
 ## Getting Started
 
-### Install Rootless Docker
+### Install Rootless Docker [^1]
 
-Refer [Docker official document](https://docs.docker.com/engine/security/rootless/).
+1. Install binary files into `~/.local/bin`:
+   ```sh
+   curl -fsSL https://get.docker.com/rootless | DOCKER_BIN=~/.local/bin sh
+   ```
+1. Restart Docker service:
+   ```sh
+   systemctl --user restart docker
+   ```
+[^1]: [Rootless mode | Docker Docs](https://docs.docker.com/engine/security/rootless/)
+

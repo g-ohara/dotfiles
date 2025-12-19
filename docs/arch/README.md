@@ -231,20 +231,7 @@ The instructions below are almost following [official installation guide](https:
 
 ### Docker
 
-1. Install essential packages:
-   ```sh
-   pacman -Syu
-   pacman -S docker docker-compose docker-buildx
-   ```
-1. Start Docker daemon and set it to start on boot:
-   ```sh
-   systemctl start docker
-   systemctl enable docker
-   ```
-1. Add a normal user to group `docker`:
-   ```sh
-   usermod -aG docker <username>
-   ```
+[Install Rootless Docker](/.dockerfiles#install-rootless-docker).
    
 ### Bluetooth [^6]
 
