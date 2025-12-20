@@ -1,2 +1,8 @@
 #!/bin/sh
-docker compose run --rm rust cargo "$@"
+# shellcheck enable=all
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT="curl https://sh.rustup.rs -sSf | RUSTUP_INIT_SKIP_PATH_CHECK=yes sh"
+"${ROOT}"/scripts/healthcheck.sh "$(basename "$0")" "${SCRIPT}"
+RETVAL=$?
+[ "${RETVAL}" -eq 0 ] && docker compose run --rm rust cargo "$@"

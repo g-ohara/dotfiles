@@ -1,2 +1,8 @@
 #!/bin/sh
-docker compose run --rm neovim nvim "$@"
+# shellcheck enable=all
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT="curl --location https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage --output ~/.local/bin/nvim && chmod u+x ~/.local/bin/nvim"
+"${ROOT}"/scripts/healthcheck.sh "$(basename "$0")" "${SCRIPT}"
+RETVAL=$?
+[ "${RETVAL}" -eq 0 ] && docker compose run --rm neovim nvim "$@"

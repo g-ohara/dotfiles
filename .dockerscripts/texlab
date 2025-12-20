@@ -1,2 +1,8 @@
 #!/bin/sh
-docker compose run --rm texlab texlab "$@"
+# shellcheck enable=all
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT="cargo install --git https://github.com/latex-lsp/texlab --locked"
+"${ROOT}"/scripts/healthcheck.sh "$(basename "$0")" "${SCRIPT}"
+RETVAL=$?
+[ "${RETVAL}" -eq 0 ] && docker compose run --rm texlab texlab "$@"
