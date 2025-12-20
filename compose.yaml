@@ -2,6 +2,8 @@ services:
   common:
     image: scratch
     user: root
+    build:
+      context: ./.dockerscripts/dockerfiles
     volumes:
       - ${PWD}:${PWD}
     working_dir: ${PWD}
@@ -13,8 +15,7 @@ services:
   bashls:
     image: bashls
     build:
-      context: ./.dockerfiles/bashls
-      dockerfile: Dockerfile
+      dockerfile: bashls/Dockerfile
     extends: common
   clangd:
     image: lspcontainers/clangd-language-server
@@ -23,21 +24,18 @@ services:
   gnuplot:
     image: gnuplot
     build:
-      context: ./.dockerfiles/gnuplot
-      dockerfile: Dockerfile
+      dockerfile: gnuplot/Dockerfile
     extends: common
   gemini-cli:
     build:
-      context: ./.dockerfiles/gemini-cli
-      dockerfile: Dockerfile
+      dockerfile: gemini-cli/Dockerfile
     image: gemini-cli
     volumes:
       - ${HOME}/.config/gemini:${HOME}/.gemini
     extends: common
   gh:
     build:
-      context: ./.dockerfiles/gh
-      dockerfile: Dockerfile
+      dockerfile: gh/Dockerfile
     image: gh
     volumes:
       - ${HOME}/.config/gh:${HOME}/.config/gh
@@ -45,8 +43,7 @@ services:
   hls:
     image: hls
     build:
-      context: ./.dockerfiles/hls/
-      dockerfile: Dockerfile
+      dockerfile: hls/Dockerfile
     environment:
       - CABAL_DIR=${PWD}/.cabal
     extends: common
@@ -57,18 +54,16 @@ services:
   neovim:
     image: neovim
     build:
-      context: ./.dockerfiles/neovim/
-      dockerfile: Dockerfile
+      dockerfile: neovim/Dockerfile
     volumes:
       - ${HOME}/compose.yaml:${HOME}/compose.yaml
       - ${HOME}/.cache/nvim:${HOME}/.cache/nvim
       - ${HOME}/.config/github-copilot:${HOME}/.config/github-copilot
       - ${HOME}/.config/nvim:${HOME}/.config/nvim
       - ${HOME}/.docker:${HOME}/.docker
-      - ${HOME}/.dockerfiles:${HOME}/.dockerfiles
+      - ${HOME}/.dockerscripts:/.dockerscripts
       - ${HOME}/.local/share/nvim:${HOME}/.local/share/nvim
       - ${HOME}/.local/state/nvim:${HOME}/.local/state/nvim
-      - ${HOME}/.local/bin:/usr/local/bin
       - ${XDG_RUNTIME_DIR}/docker.sock:${XDG_RUNTIME_DIR}/docker.sock
     environment:
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
@@ -77,16 +72,14 @@ services:
   node-tsserver:
     image: node-tsserver
     build:
-      context: ./.dockerfiles/node-tsserver/
-      dockerfile: Dockerfile
+      dockerfile: node-tsserver/Dockerfile
     volumes:
-      - ${HOME}/.npm:${HOME}/.npm
+      - ${HOME}:${HOME}
     extends: common
   poetry:
     image: poetry
     build:
-      context: ./.dockerfiles/poetry/
-      dockerfile: Dockerfile
+      dockerfile: poetry/Dockerfile
     environment:
       - POETRY_CACHE_DIR=${PWD}/.cache
     extends: common
@@ -99,22 +92,19 @@ services:
   rye:
     image: rye
     build:
-      context: ./.dockerfiles/rye/
-      dockerfile: Dockerfile
+      dockerfile: rye/Dockerfile
     extends: common
     volumes:
       - ${HOME}/.cache:${HOME}/.cache
   texlab:
     image: texlab
     build:
-      context: ./.dockerfiles/texlab/
-      dockerfile: Dockerfile
+      dockerfile: texlab/Dockerfile
     extends: common
   uv:
     image: uv
     build:
-      context: .
-      dockerfile: ./.dockerfiles/uv/Dockerfile
+      dockerfile: uv/Dockerfile
     environment:
       - UV_CACHE_DIR=${PWD}/.cache
       - UV_PYTHON_INSTALL_DIR=${PWD}/.python

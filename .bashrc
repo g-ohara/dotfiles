@@ -93,7 +93,7 @@ if ! [[ -f ~/.gitconfig ]]; then
   touch ~/.gitconfig
 fi
 
-export PATH=${PATH}:${HOME}/.local/bin:${HOME}/.local/bin/nvim
+export PATH=${PATH}:${HOME}/.local/bin:${HOME}/.dockerscripts
 
 # Set neovim as default editor for
 # - git
