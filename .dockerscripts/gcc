@@ -1,0 +1,4 @@
+#!/bin/sh
+# shellcheck enable=all
+
+docker compose run --rm gcc gcc "$@"

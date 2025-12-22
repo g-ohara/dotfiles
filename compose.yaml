@@ -21,6 +21,10 @@ services:
     image: lspcontainers/clangd-language-server
     extends: common
     pull_policy: missing
+  gcc:
+    image: gcc:12.2
+    extends: common
+    pull_policy: missing
   gnuplot:
     image: gnuplot
     build:
