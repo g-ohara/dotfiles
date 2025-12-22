@@ -17,6 +17,15 @@ services:
     build:
       dockerfile: bashls/Dockerfile
     extends: common
+  cabal:
+    image: cabal
+    build:
+      dockerfile: cabal/Dockerfile
+    volumes:
+      - ${HOME}/.cache/cabal:${HOME}/.cache/cabal
+      - ${HOME}/.config/cabal:${HOME}/.config/cabal
+      - ${HOME}/.local/state/cabal:${HOME}/.local/state/cabal
+    extends: common
   clangd:
     image: lspcontainers/clangd-language-server
     extends: common
