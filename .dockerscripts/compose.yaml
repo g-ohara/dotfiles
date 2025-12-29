@@ -3,7 +3,7 @@ services:
     image: scratch
     user: root
     build:
-      context: ./.dockerscripts/dockerfiles
+      context: ./dockerfiles
     volumes:
       - ${PWD}:${PWD}
     working_dir: ${PWD}
@@ -69,12 +69,11 @@ services:
     build:
       dockerfile: neovim/Dockerfile
     volumes:
-      - ${HOME}/compose.yaml:${HOME}/compose.yaml
       - ${HOME}/.cache/nvim:${HOME}/.cache/nvim
       - ${HOME}/.config/github-copilot:${HOME}/.config/github-copilot
       - ${HOME}/.config/nvim:${HOME}/.config/nvim
       - ${HOME}/.docker:${HOME}/.docker
-      - ${HOME}/.dockerscripts:/.dockerscripts
+      - ${HOME}/.dockerscripts:${HOME}/.dockerscripts
       - ${HOME}/.local/share/nvim:${HOME}/.local/share/nvim
       - ${HOME}/.local/state/nvim:${HOME}/.local/state/nvim
       - ${XDG_RUNTIME_DIR}/docker.sock:${XDG_RUNTIME_DIR}/docker.sock

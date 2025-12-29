@@ -1,2 +1,3 @@
 #!/bin/sh
-docker compose run --rm cabal cabal "$@"
+
+docker compose -f ${HOME}/.dockerscripts/compose.yaml run --rm cabal cabal "$@"

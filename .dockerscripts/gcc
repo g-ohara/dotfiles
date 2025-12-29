@@ -1,4 +1,4 @@
 #!/bin/sh
 # shellcheck enable=all
 
-docker compose run --rm gcc gcc "$@"
+docker compose -f ${HOME}/.dockerscripts/compose.yaml run --rm gcc gcc "$@"

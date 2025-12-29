@@ -1,2 +1,2 @@
 #!/bin/sh
-docker compose run --rm hls haskell-language-server-wrapper "$@"
+docker compose -f ${HOME}/.dockerscripts/compose.yaml run --rm hls haskell-language-server-wrapper "$@"

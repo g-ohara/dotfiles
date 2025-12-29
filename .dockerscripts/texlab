@@ -5,4 +5,4 @@ ROOT="$(cd "$(dirname "$0")" && pwd)"
 SCRIPT="cargo install --git https://github.com/latex-lsp/texlab --locked"
 "${ROOT}"/scripts/healthcheck.sh "$(basename "$0")" "${SCRIPT}"
 RETVAL=$?
-[ "${RETVAL}" -eq 0 ] && docker compose run --rm texlab texlab "$@"
+[ "${RETVAL}" -eq 0 ] && docker compose -f ${HOME}/.dockerscripts/compose.yaml run --rm texlab texlab "$@"
