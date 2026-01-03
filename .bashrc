@@ -1,10 +1,6 @@
 #!/bin/bash
 # shellcheck enable=all
 
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
@@ -85,50 +81,3 @@ if [[ -f ~/.git-completion.bash ]]; then
 else
   echo "ERROR: git-completion.bash not found"
 fi
-
-# Create an empty .gitconfig file if it does not exist, such that `git config`
-# commands do not write configurations to .config/git/config by default.
-if ! [[ -f ~/.gitconfig ]]; then
-  echo "Creating empty .gitconfig..."
-  touch ~/.gitconfig
-fi
-
-export PATH=${PATH}:${HOME}/.local/bin:${HOME}/.dockerscripts
-
-# Set neovim as default editor for
-# - git
-# - pass
-# and other commands.
-if hash nvim &> /dev/null; then
-  export EDITOR=nvim
-  export VISUAL=nvim
-elif hash vim &> /dev/null; then
-  export EDITOR=vim
-  export VISUAL=vim
-elif hash vi &> /dev/null; then
-  export EDITOR=vi
-  export VISUAL=vi
-else
-  echo "ERROR: vi not found"
-fi
-
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-
-# -----------------------------------------------------------------------------
-
-# Define and export environment variables for Docker Compose to recognize the
-# current user and group.
-# NOTE: It seems that $UID is already defined but not exported by default.
-GID=$(id -g)
-export UID GID
-export DOCKER_CONTEXT=rootless
-
-# Use GPG Agent as SSH Agent.
-# When an SSH client (ex. `ssh`, `scp`) needs to anthenticate to a remote
-# server, it looks for the SSH_AUTH_SOCK environment variable to find the path
-# to communicate with the SSH agent. Here we set the SSH_AUTH_SOCK to the
-# socket file created by GPG Agent.
-SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-export SSH_AUTH_SOCK
