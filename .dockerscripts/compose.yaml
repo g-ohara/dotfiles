@@ -10,7 +10,6 @@ services:
     tty: true
     pull_policy: never
     environment:
-      - HOME=${HOME}
       - COLORTERM=truecolor
   bashls:
     image: bashls
@@ -22,9 +21,9 @@ services:
     build:
       dockerfile: cabal/Dockerfile
     volumes:
-      - ${HOME}/.cache/cabal:${HOME}/.cache/cabal
-      - ${HOME}/.config/cabal:${HOME}/.config/cabal
-      - ${HOME}/.local/state/cabal:${HOME}/.local/state/cabal
+      - ${HOME}/.cache/cabal:/root/.cache/cabal
+      - ${HOME}/.config/cabal:/root/.config/cabal
+      - ${HOME}/.local/state/cabal:/root/.local/state/cabal
     extends: common
   clangd:
     image: lspcontainers/clangd-language-server
@@ -44,14 +43,14 @@ services:
       dockerfile: gemini-cli/Dockerfile
     image: gemini-cli
     volumes:
-      - ${HOME}/.config/gemini:${HOME}/.gemini
+      - ${HOME}/.config/gemini:/root/.gemini
     extends: common
   gh:
     build:
       dockerfile: gh/Dockerfile
     image: gh
     volumes:
-      - ${HOME}/.config/gh:${HOME}/.config/gh
+      - ${HOME}/.config/gh:/root/.config/gh
     extends: common
   hls:
     image: hls
@@ -65,17 +64,17 @@ services:
     extends: common
     pull_policy: missing
   neovim:
-    image: neovim
+    image: neovim:0.0
     build:
       dockerfile: neovim/Dockerfile
     volumes:
-      - ${HOME}/.cache/nvim:${HOME}/.cache/nvim
-      - ${HOME}/.config/github-copilot:${HOME}/.config/github-copilot
-      - ${HOME}/.config/nvim:${HOME}/.config/nvim
-      - ${HOME}/.docker:${HOME}/.docker
-      - ${HOME}/.dockerscripts:${HOME}/.dockerscripts
-      - ${HOME}/.local/share/nvim:${HOME}/.local/share/nvim
-      - ${HOME}/.local/state/nvim:${HOME}/.local/state/nvim
+      - ${HOME}/.cache/nvim:/root/.cache/nvim
+      - ${HOME}/.config/github-copilot:/root/.config/github-copilot
+      - ${HOME}/.config/nvim:/root/.config/nvim
+      - ${HOME}/.docker:/root/.docker
+      - ${HOME}/.dockerscripts:/root/.dockerscripts
+      - ${HOME}/.local/share/nvim:/root/.local/share/nvim
+      - ${HOME}/.local/state/nvim:/root/.local/state/nvim
       - ${XDG_RUNTIME_DIR}/docker.sock:${XDG_RUNTIME_DIR}/docker.sock
     environment:
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
@@ -86,7 +85,7 @@ services:
     build:
       dockerfile: node-tsserver/Dockerfile
     volumes:
-      - ${HOME}:${HOME}
+      - ${HOME}:/root/
     extends: common
   poetry:
     image: poetry
@@ -107,7 +106,7 @@ services:
       dockerfile: rye/Dockerfile
     extends: common
     volumes:
-      - ${HOME}/.cache:${HOME}/.cache
+      - ${HOME}/.cache:/root/.cache
   texlab:
     image: texlab
     build:
