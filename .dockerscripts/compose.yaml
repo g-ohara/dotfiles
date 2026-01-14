@@ -39,19 +39,36 @@ services:
       dockerfile: gnuplot/Dockerfile
     extends: common
   gemini-cli:
+    image: gemini-cli
     build:
       dockerfile: gemini-cli/Dockerfile
-    image: gemini-cli
     volumes:
       - ${HOME}/.config/gemini:/root/.gemini
     extends: common
   gh:
+    image: gh
     build:
       dockerfile: gh/Dockerfile
-    image: gh
     volumes:
       - ${HOME}/.config/gh:/root/.config/gh
     extends: common
+  firefox:
+    image: firefox
+    build:
+      dockerfile: firefox/Dockerfile
+    extends: common
+    environment:
+      - DISPLAY=${DISPLAY}
+      - GTK_IM_MODULE=fcitx
+      - QT_IM_MODULE=fcitx
+      - XMODIFIERS=@im=fcitx
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/bus
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - ${HOME}/.mozilla:/root/.mozilla
+      - ${HOME}/.cache/mozilla:/root/.cache/mozilla
+      - ${HOME}/.config/fcitx5:/root/.config/fcitx5:ro
+      - /run/user/1000/bus:/run/user/bus:ro
   hls:
     image: hls
     build:
