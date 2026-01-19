@@ -37,11 +37,6 @@ else
   echo "ERROR: vi not found"
 fi
 
-# Use Fcitx as input method.
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-
 # Use GPG Agent as SSH Agent.
 # When an SSH client (ex. `ssh`, `scp`) needs to anthenticate to a remote
 # server, it looks for the SSH_AUTH_SOCK environment variable to find the path
