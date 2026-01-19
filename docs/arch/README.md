@@ -231,7 +231,7 @@ The instructions below are almost following [official installation guide](https:
 
 ### Docker
 
-[Install Rootless Docker](/.dockerfiles#install-rootless-docker).
+[Install Rootless Docker](/.dockerscripts#install-rootless-docker).
    
 ### Bluetooth [^6]
 

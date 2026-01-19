@@ -1,4 +1,4 @@
-# .dockerfiles
+# .dockerscripts
 
 I **hate** polluting my local environment by installing lots of applications.
 But I am Neovimmer and desire to create my best development environment using 
