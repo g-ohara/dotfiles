@@ -1,6 +1,8 @@
 FROM haskell:9.12.2-slim-bookworm
 
+ENV PATH=/cabal/.local/bin:${PATH}
 ENV CABAL_CONFIG=/cabal/.cabal/config
+
 RUN cabal user-config init && \
     cabal user-config update \
     --augment="remote-repo-cache: /cabal/.cache/cabal/packages" \
