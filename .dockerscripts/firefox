@@ -1,4 +1,6 @@
 #!/bin/sh
 # shellcheck enable=all
 
+xhost +local:docker
 docker compose -f "${HOME}"/.dockerscripts/compose.yaml run --rm firefox firefox "$@"
+xhost -local:docker
