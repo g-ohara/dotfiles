@@ -71,6 +71,7 @@ services:
       - ${HOME}/.mozilla:/root/.mozilla
       - ${HOME}/.cache/mozilla:/root/.cache/mozilla
       - ${HOME}/.config/fcitx5:/root/.config/fcitx5:ro
+      - ${HOME}/Downloads:/root/Downloads
       - /run/user/1000/bus:/run/user/bus
   hls:
     image: hls
