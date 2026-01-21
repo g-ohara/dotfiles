@@ -6,6 +6,7 @@ services:
       context: ./dockerfiles
     volumes:
       - ${PWD}:${PWD}
+      - /etc/localtime:/etc/localtime:ro  # Sync container time with host time
     working_dir: ${PWD}
     tty: true
     pull_policy: never
