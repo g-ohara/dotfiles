@@ -9,6 +9,8 @@ services:
     working_dir: ${PWD}
     tty: true
     pull_policy: never
+    dns:
+      - 8.8.8.8
     environment:
       - COLORTERM=truecolor
   bashls:
@@ -52,6 +54,23 @@ services:
     volumes:
       - ${HOME}/.config/gh:/root/.config/gh
     extends: common
+  firefox:
+    image: firefox
+    build:
+      dockerfile: firefox/Dockerfile
+    extends: common
+    environment:
+      - DISPLAY=${DISPLAY}
+      - GTK_IM_MODULE=${GTK_IM_MODULE}
+      - QT_IM_MODULE=${QT_IM_MODULE}
+      - XMODIFIERS=${XMODIFIERS}
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/bus
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - ${HOME}/.mozilla:/root/.mozilla
+      - ${HOME}/.cache/mozilla:/root/.cache/mozilla
+      - ${HOME}/.config/fcitx5:/root/.config/fcitx5:ro
+      - /run/user/1000/bus:/run/user/bus
   hls:
     image: hls
     build:
