@@ -24,5 +24,31 @@ server containers required to build a development environment for a given file.
    ```sh
    systemctl --user restart docker
    ```
+
+### Install Docker Compose [^2]
+
+1. Confirm the latest version of Docker Compose at [Releases · docker/compose](https://github.com/docker/compose/releases).
+
+1. Confirm the architecture of your system:
+   ```sh
+   uname -m
+   ```
+
+1. To download and install the Docker Compose CLI plugin, run:
+   ```sh
+   DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+   mkdir -p $DOCKER_CONFIG/cli-plugins
+   curl -SL https://github.com/docker/compose/releases/download/{latest-version}/docker-compose-linux-{architecture} -o $DOCKER_CONFIG/cli-plugins/docker-compose
+   ```
+1. Apply executable permissions to the binary:
+   ```sh
+   chmod +x ~/.docker/cli-plugins/docker-compose
+   ```
+1. Test the installation:
+   ```sh
+   docker compose version
+   ```
+
 [^1]: [Rootless mode | Docker Docs](https://docs.docker.com/engine/security/rootless/)
+[^2]: [Plugin | Docker Docs](https://docs.docker.com/compose/install/linux/#install-the-plugin-manually)
 
