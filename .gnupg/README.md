@@ -7,3 +7,7 @@
   systemctl --user restart ssh-agent
   ```
 
+* When you get `Could not add identity xxx: agent refused operation`, run:
+  ```
+  eval `ssh-agent`
+  ```
