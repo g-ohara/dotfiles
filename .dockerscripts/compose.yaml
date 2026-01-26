@@ -10,8 +10,6 @@ services:
     working_dir: ${PWD}
     tty: true
     pull_policy: never
-    dns:
-      - 8.8.8.8
     environment:
       - COLORTERM=truecolor
   bashls:
