@@ -45,6 +45,9 @@ fi
 SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export SSH_AUTH_SOCK
 
+# Set Docker context to rootless by default
+export DOCKER_CONTEXT=rootless
+
 # Execute `~/.bashrc` if it exists and can be read
 if test -r ~/.bashrc; then
   . ~/.bashrc
