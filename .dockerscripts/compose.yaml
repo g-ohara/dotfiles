@@ -54,13 +54,13 @@ services:
       - ${HOME}/.config/gh:/root/.config/gh
     extends: common
   firefox:
-    image: firefox
+    image: firefox:0.0
     build:
       dockerfile: firefox/Dockerfile
     extends: common
     environment:
       - DISPLAY=${DISPLAY}
-      - GTK_IM_MODULE=${GTK_IM_MODULE}
+      - GTK_IM_MODULE=xim
       - QT_IM_MODULE=${QT_IM_MODULE}
       - XMODIFIERS=${XMODIFIERS}
       - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/bus
