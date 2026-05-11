@@ -49,6 +49,6 @@ export SSH_AUTH_SOCK
 export DOCKER_CONTEXT=rootless
 
 # Execute `~/.bashrc` if it exists and can be read
-if test -r ~/.bashrc; then
-  . ~/.bashrc
+if test -r "${HOME}"/.bashrc; then
+  . "${HOME}"/.bashrc
 fi
