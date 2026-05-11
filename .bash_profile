@@ -52,3 +52,6 @@ export DOCKER_CONTEXT=rootless
 if test -r "${HOME}"/.bashrc; then
   . "${HOME}"/.bashrc
 fi
+
+# Set `less` as the default pager for commands like `git log` and `man`.
+export PAGER=less
