@@ -1,0 +1,13 @@
+#!/bin/sh
+# shellcheck enable=all
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT="curl -fsSL https://opencode.ai/install | bash"
+"${ROOT}"/scripts/healthcheck.sh "$(basename "$0")" "${SCRIPT}"
+RETVAL=$?
+[ "${RETVAL}" -eq 0 ] &&
+  mkdir -p "${HOME}"/.cache/opencode &&
+  mkdir -p "${HOME}"/.config/opencode &&
+  mkdir -p "${HOME}"/.local/share/opencode &&
+  mkdir -p "${HOME}"/.local/state/opencode &&
+  docker compose -f "${HOME}"/.dockerscripts/compose.yaml run --service-ports --rm opencode opencode "$@"

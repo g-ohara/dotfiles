@@ -106,6 +106,31 @@ services:
     volumes:
       - ${HOME}:/root/
     extends: common
+  opencode:
+    image: opencode:1.17.7
+    build:
+      dockerfile: opencode/Dockerfile
+      args:
+        - OPENCODE_VERSION=1.17.7
+    extends: glab
+    ports:
+      - 4966:4966
+    volumes:
+      - type: bind
+        source: ${HOME}/.agents
+        target: ${DOCKER_HOME:-/root}/.agents
+      - type: bind
+        source: ${HOME}/.cache/opencode
+        target: ${DOCKER_HOME:-/root}/.cache/opencode
+      - type: bind
+        source: ${HOME}/.config/opencode
+        target: ${DOCKER_HOME:-/root}/.config/opencode
+      - type: bind
+        source: ${HOME}/.local/share/opencode
+        target: ${DOCKER_HOME:-/root}/.local/share/opencode
+      - type: bind
+        source: ${HOME}/.local/state/opencode
+        target: ${DOCKER_HOME:-/root}/.local/state/opencode
   poetry:
     image: poetry
     build:
