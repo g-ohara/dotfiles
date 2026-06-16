@@ -1,0 +1,45 @@
+{
+  "version": 3,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-05-12T03:08:56.633Z",
+      "updatedAt": "2026-05-12T03:08:56.633Z"
+    },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/grill-me/SKILL.md",
+      "skillFolderHash": "2a1ad17028306ebe45f0e49703fa28b9b2e7f499",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-05-14T04:39:31.574Z",
+      "updatedAt": "2026-06-02T07:12:19.248Z"
+    },
+    "difit": {
+      "source": "yoshiko-pg/difit",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/yoshiko-pg/difit.git",
+      "skillPath": "skills/difit/SKILL.md",
+      "skillFolderHash": "5ac7df1a4b4a4f67adc699085d1c499b3bedecaa",
+      "installedAt": "2026-06-02T22:54:30.555Z",
+      "updatedAt": "2026-06-02T22:54:30.555Z"
+    },
+    "difit-review": {
+      "source": "yoshiko-pg/difit",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/yoshiko-pg/difit.git",
+      "skillPath": "skills/difit-review/SKILL.md",
+      "skillFolderHash": "faf57eb1985cda1f74101afa4a14e5905e248d0c",
+      "installedAt": "2026-06-02T22:54:30.560Z",
+      "updatedAt": "2026-06-02T22:54:30.560Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  }
+}
