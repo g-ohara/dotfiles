@@ -30,6 +30,11 @@ services:
     image: lspcontainers/clangd-language-server
     extends: common
     pull_policy: missing
+  cmake:
+    image: cmake
+    build:
+      dockerfile: cmake/Dockerfile
+    extends: common
   gcc:
     image: gcc:12.2
     extends: common
