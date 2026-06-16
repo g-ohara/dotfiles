@@ -46,7 +46,11 @@ SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export SSH_AUTH_SOCK
 
 # Set Docker context to rootless by default
-export DOCKER_CONTEXT=rootless
+if [[ -S "${XDG_RUNTIME_DIR:-/run/user/${UID}}"/docker.sock ]]; then
+  export DOCKER_CONTEXT=rootless
+else
+  export DOCKER_CONTEXT=default
+fi
 
 # Execute `~/.bashrc` if it exists and can be read
 if test -r "${HOME}"/.bashrc; then
