@@ -156,6 +156,10 @@ services:
     environment:
       - POETRY_CACHE_DIR=${PWD}/.cache
     extends: common
+  prettier:
+    image: jauderho/prettier:3.8.3-alpine
+    pull_policy: missing
+    extends: common
   rust:
     image: rust:1.90.0-slim-bullseye
     environment:
