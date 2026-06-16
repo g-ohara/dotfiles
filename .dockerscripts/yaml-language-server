@@ -1,0 +1,8 @@
+#!/bin/sh
+# shellcheck enable=all
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT="See: https://github.com/redhat-developer/yaml-language-server#getting-started"
+"${ROOT}"/scripts/healthcheck.sh "$(basename "$0")" "${SCRIPT}"
+RETVAL=$?
+[ "${RETVAL}" -eq 0 ] && docker compose -f "${HOME}"/.dockerscripts/compose.yaml run --rm prettier prettier "$@"

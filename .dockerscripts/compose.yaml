@@ -186,3 +186,7 @@ services:
       - UV_CACHE_DIR=${PWD}/.cache
       - UV_PYTHON_INSTALL_DIR=${PWD}/.python
     extends: common
+  yamlls:
+    image: quay.io/redhat-developer/yaml-language-server
+    extends: common
+    pull_policy: missing
