@@ -58,6 +58,13 @@ services:
     volumes:
       - ${HOME}/.config/gh:/root/.config/gh
     extends: common
+  glab:
+    build:
+      dockerfile: glab/Dockerfile
+    image: glab
+    volumes:
+      - ${HOME}/.config/glab-cli:/root/.config/glab-cli
+    extends: common
   firefox:
     image: firefox:0.0
     build:
