@@ -1,9 +1,9 @@
-*
-*/
+/*
 
 !.gitignore
 !README.md
 !X11/
 !git/
 !nvim/
+!opencode/
 !xmobar/
