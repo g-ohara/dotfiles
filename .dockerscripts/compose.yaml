@@ -94,6 +94,12 @@ services:
     image: lspcontainers/lua-language-server
     extends: common
     pull_policy: missing
+  marksman:
+    image: marksman:2026-02-08
+    build:
+      dockerfile: marksman/Dockerfile
+      args:
+        - MARKSMAN_VERSION=2026-02-08
   neovim:
     image: neovim:0.0
     build:
