@@ -46,7 +46,8 @@ SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export SSH_AUTH_SOCK
 
 # Set Docker context to rootless by default
-if [[ -S "${XDG_RUNTIME_DIR:-/run/user/${UID}}"/docker.sock ]]; then
+if command -v systemctl > /dev/null 2>&1 \
+  && systemctl --user is-enabled docker.service > /dev/null 2>&1; then
   export DOCKER_CONTEXT=rootless
 else
   export DOCKER_CONTEXT=default
