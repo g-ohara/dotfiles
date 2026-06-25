@@ -12,7 +12,8 @@ RUN apk add \
     git \
     linux-headers \
     ninja
-RUN git clone --branch stable --depth 1  https://github.com/neovim/neovim /root/neovim
+ARG NEOVIM_VERSION
+RUN git clone --branch v${NEOVIM_VERSION} --depth 1  https://github.com/neovim/neovim /root/neovim
 WORKDIR /root/neovim
 RUN make CMAKE_BUILD_TYPE=RelWithDebInfo
 RUN make CMAKE_INSTALL_PREFIX=/usr/local install

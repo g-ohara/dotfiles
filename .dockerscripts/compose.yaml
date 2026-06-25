@@ -101,9 +101,11 @@ services:
       args:
         - MARKSMAN_VERSION=2026-02-08
   neovim:
-    image: neovim:0.0
+    image: neovim:0.12.3
     build:
       dockerfile: neovim/Dockerfile
+      args:
+        - NEOVIM_VERSION=0.12.3
     volumes:
       - ${HOME}/.cache/nvim:/root/.cache/nvim
       - ${HOME}/.config/github-copilot:/root/.config/github-copilot
