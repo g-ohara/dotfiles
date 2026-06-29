@@ -37,9 +37,6 @@ vim.api.nvim_create_autocmd(
 -- Visually indent wrapped lines
 vim.opt.breakindent = true
 
--- Set column lign at 80 characters by default
-vim.opt.colorcolumn = "80"
-
 -- Display underline for cursor line
 vim.opt.cursorline = true
 
