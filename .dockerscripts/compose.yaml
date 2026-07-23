@@ -83,6 +83,21 @@ services:
       - ${HOME}/.config/fcitx5:/root/.config/fcitx5:ro
       - ${HOME}/Downloads:/root/Downloads
       - /run/user/1000/bus:/run/user/bus
+  hermes-agent:
+    image: hermes-agent:2026.7.20
+    build:
+      dockerfile: hermes-agent/Dockerfile
+      args:
+        - HERMES_AGENT_VERSION=2026.7.20
+        - GITLAB_MCP_VERSION=2.1.42
+    volumes:
+      - type: bind
+        source: ${HOME}/.agents
+        target: ${DOCKER_HOME:-/root}/.agents
+      - type: bind
+        source: ${HOME}/.hermes
+        target: ${DOCKER_HOME:-/root}/.hermes
+    extends: common
   hls:
     image: hls
     build:
