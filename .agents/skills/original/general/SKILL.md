@@ -36,6 +36,7 @@ When creating files **inside** `.opencode/`, always update `.opencode/.gitignore
 ### 6. Load domain-specific skill for the task type
 
 When the task or request mentions any of the following, load the corresponding additional skill:
+- Running shell commands that depend on OS, package manager, init system, or filesystem layout → [`environment`](../environment/SKILL.md)
 - GitLab Issue/MR operations, comments, or review (e.g. "Read Issue #7", "Review MR #N", "glab") → [`gitlab-cli`](../gitlab-cli/SKILL.md)
 - Merge Request review → [`mr-review`](../mr-review/SKILL.md)
 - Documentation creation/modification → [`doc-writing`](../doc-writing/SKILL.md)
