@@ -1,9 +1,8 @@
-mcp_servers:
-  gitlab:
-    url: "http://gitlab-mcp:3002/mcp"
-    headers:
-      Authorization: "Bearer ${STREAMABLE_HTTP_AUTH_TOKEN}"
-
+model:
+  default: glm-5
+  provider: opencode-go
+  base_url: https://opencode.ai/zen/go/v1
+  api_mode: chat_completions
 agent:
   max_turns: 150
   disabled_toolsets:
@@ -43,6 +42,15 @@ memory:
   memory_enabled: false
   user_profile_enabled: false
 _config_version: 33
+mcp_servers:
+  gitlab:
+    url: http://gitlab-mcp:3002/mcp
+    headers:
+      Authorization: Bearer ${STREAMABLE_HTTP_AUTH_TOKEN}
+  github:
+    url: https://api.githubcopilot.com/mcp/
+    headers:
+      Authorization: Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}
 platform_toolsets:
   cli:
     - file

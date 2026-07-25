@@ -102,6 +102,7 @@ services:
       - gitlab-mcp
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
     volumes:
       - type: bind
         source: ${HOME}/.agents
@@ -162,6 +163,7 @@ services:
       - gitlab-mcp
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
     extends: common
     ports:
       - 4966:4966
