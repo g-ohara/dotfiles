@@ -1,27 +1,16 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "gitlab": {
+      "type": "remote",
+      "url": "http://gitlab-mcp:3002/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:STREAMABLE_HTTP_AUTH_TOKEN}"
+      },
+      "oauth": false
+    }
+  },
   "permission": {
-    "bash": {
-      "*": "ask",
-      "ls *": "allow",
-      "pwd": "allow",
-      "cat *": "allow",
-      "tree *": "allow",
-      "head *": "allow",
-      "tail *": "allow",
-      "grep *": "allow",
-      "git status": "allow",
-      "git diff": "allow",
-      "git log *": "allow",
-      "git branch *": "allow",
-      "git show *": "allow",
-      "ping *": "allow",
-      "uname *": "allow",
-      "df *": "allow",
-      "free *": "allow"
-    },
-    "webfetch": "ask",
-    "websearch": "deny",
-    "skill": "ask"
+    "*": "allow"
   }
 }

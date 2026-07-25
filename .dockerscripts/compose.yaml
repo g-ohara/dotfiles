@@ -58,13 +58,6 @@ services:
     volumes:
       - ${HOME}/.config/gh:/root/.config/gh
     extends: common
-  glab:
-    build:
-      dockerfile: glab/Dockerfile
-    image: glab
-    volumes:
-      - ${HOME}/.config/glab-cli:/root/.config/glab-cli
-    extends: common
   firefox:
     image: firefox:0.0
     build:
@@ -83,13 +76,32 @@ services:
       - ${HOME}/.config/fcitx5:/root/.config/fcitx5:ro
       - ${HOME}/Downloads:/root/Downloads
       - /run/user/1000/bus:/run/user/bus
+  gitlab-mcp:
+    image: gitlab-mcp
+    build:
+      context: ./dockerfiles
+      dockerfile: gitlab-mcp/Dockerfile
+      args:
+        - GITLAB_MCP_VERSION=2.1.42
+    pull_policy: never
+    user: root
+    environment:
+      - GITLAB_API_URL=${GITLAB_API_URL}
+      - GITLAB_PERSONAL_ACCESS_TOKEN=${GITLAB_PERSONAL_ACCESS_TOKEN}
+      - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
+      - MCP_SERVER_URL=http://gitlab-mcp:3002
+      - MCP_ALLOWED_HOSTS=gitlab-mcp,gitlab-mcp:3002
+    restart: unless-stopped
   hermes-agent:
     image: hermes-agent:2026.7.20
     build:
       dockerfile: hermes-agent/Dockerfile
       args:
         - HERMES_AGENT_VERSION=2026.7.20
-        - GITLAB_MCP_VERSION=2.1.42
+    depends_on:
+      - gitlab-mcp
+    environment:
+      - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
     volumes:
       - type: bind
         source: ${HOME}/.agents
@@ -122,13 +134,12 @@ services:
       args:
         - NEOVIM_VERSION=0.12.3
     volumes:
-      - ${HOME}/.cache/nvim:/root/.cache/nvim
-      - ${HOME}/.config/github-copilot:/root/.config/github-copilot
-      - ${HOME}/.config/nvim:/root/.config/nvim
-      - ${HOME}/.docker:/root/.docker
-      - ${HOME}/.dockerscripts:/root/.dockerscripts
-      - ${HOME}/.local/share/nvim:/root/.local/share/nvim
-      - ${HOME}/.local/state/nvim:/root/.local/state/nvim
+      - type: bind
+        source: ${HOME}
+        target: ${DOCKER_HOME:-/root}
+      - type: bind
+        source: ${HOME}
+        target: ${HOME}
       - ${XDG_RUNTIME_DIR}/docker.sock:${XDG_RUNTIME_DIR}/docker.sock
     environment:
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
@@ -142,12 +153,16 @@ services:
       - ${HOME}:/root/
     extends: common
   opencode:
-    image: opencode:1.17.7
+    image: opencode:1.18.5
     build:
       dockerfile: opencode/Dockerfile
       args:
-        - OPENCODE_VERSION=1.17.7
-    extends: glab
+        - OPENCODE_VERSION=1.18.5
+    depends_on:
+      - gitlab-mcp
+    environment:
+      - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
+    extends: common
     ports:
       - 4966:4966
     volumes:

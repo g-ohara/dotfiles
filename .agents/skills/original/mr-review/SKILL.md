@@ -138,5 +138,6 @@ git push
 
 ## 関連スキル
 
-- `gitlab-cli`: GitLab の MR/Issue 確認・操作
 - `project-context`: プロジェクト規約・コーディングガイドライン参照
+
+GitLab へのアクセスは `gitlab-mcp` コンテナ（`http://gitlab-mcp:3002/mcp`）が提供する `gitlab_*` MCP ツール経由で行う。`glab` CLI は使用しない。

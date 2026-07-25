@@ -1,3 +1,9 @@
+mcp_servers:
+  gitlab:
+    url: "http://gitlab-mcp:3002/mcp"
+    headers:
+      Authorization: "Bearer ${STREAMABLE_HTTP_AUTH_TOKEN}"
+
 agent:
   max_turns: 150
   disabled_toolsets:
