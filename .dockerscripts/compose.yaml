@@ -30,6 +30,28 @@ services:
     image: lspcontainers/clangd-language-server
     extends: common
     pull_policy: missing
+  claude-code:
+    image: claude-code:2.1.220
+    build:
+      dockerfile: claude-code/Dockerfile
+      args:
+        - CLAUDE_CODE_VERSION=2.1.220
+    depends_on:
+      - gitlab-mcp
+    environment:
+      - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
+    extends: common
+    volumes:
+      - type: bind
+        source: ${HOME}/.agents/
+        target: ${DOCKER_HOME:-/root}/.agents/
+      - type: bind
+        source: ${HOME}/.claude/
+        target: ${DOCKER_HOME:-/root}/.claude/
+      - type: bind
+        source: ${HOME}/.claude.json
+        target: ${DOCKER_HOME:-/root}/.claude.json
   cmake:
     image: cmake
     build:
