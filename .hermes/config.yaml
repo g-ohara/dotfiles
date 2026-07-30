@@ -20,9 +20,7 @@ mcp_servers:
     headers:
       Authorization: Bearer ${STREAMABLE_HTTP_AUTH_TOKEN}
   github:
-    url: https://api.githubcopilot.com/mcp/
-    headers:
-      Authorization: Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}
+    url: http://github-mcp:3003/mcp
 platform_toolsets:
   cli: '["file","terminal"]'
 smart_model_routing:

@@ -134,9 +134,9 @@ services:
         - HERMES_AGENT_VERSION=2026.7.20
     depends_on:
       - gitlab-mcp
+      - github-mcp
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
-      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
     volumes:
       - type: bind
         source: ${HOME}/.agents
@@ -197,9 +197,9 @@ services:
         - OPENCODE_VERSION=1.18.5
     depends_on:
       - gitlab-mcp
+      - github-mcp
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
-      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
     extends: common
     ports:
       - 4966:4966
