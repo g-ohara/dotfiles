@@ -98,6 +98,18 @@ services:
       - ${HOME}/.config/fcitx5:/root/.config/fcitx5:ro
       - ${HOME}/Downloads:/root/Downloads
       - /run/user/1000/bus:/run/user/bus
+  github-mcp:
+    image: github-mcp
+    build:
+      context: ./dockerfiles
+      dockerfile: github-mcp/Dockerfile
+      args:
+        - GITHUB_MCP_SERVER_VERSION=v1.7.0
+        - MCP_PROXY_VERSION=v0.12.0
+    pull_policy: never
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
+    restart: unless-stopped
   gitlab-mcp:
     image: gitlab-mcp
     build:
