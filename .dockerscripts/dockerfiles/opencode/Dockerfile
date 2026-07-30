@@ -5,3 +5,6 @@ RUN apt-get update && apt-get install -y curl git
 # Install OpenCode and difit
 ARG OPENCODE_VERSION
 RUN npm install -g opencode-ai@${OPENCODE_VERSION} difit
+
+RUN apt-get update && apt-get install -y python3 python3-pip
+RUN apt-get install -y make
