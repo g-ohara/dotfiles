@@ -3,3 +3,6 @@
 
 # Set ls color output
 alias ls='ls --color=auto'
+
+# Supabase CLI
+export PATH="/home/genji/.supabase/bin:$PATH"
