@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "gitlab": {
+      "type": "http",
+      "url": "http://gitlab-mcp:3002/mcp",
+      "headers": {
+        "Authorization": "Bearer ${STREAMABLE_HTTP_AUTH_TOKEN}"
+      }
+    },
+    "github": {
+      "type": "http",
+      "url": "http://github-mcp:3003/mcp"
+    }
+  }
+}
