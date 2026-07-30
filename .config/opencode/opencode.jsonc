@@ -23,7 +23,7 @@
       "mode": "primary",
       "model": "opencode-go/glm-5.2",
       "description": "Plans work and delegates all execution to the worker subagent. Cannot read code, run commands, or call MCP tools directly.",
-      "prompt": "You are an orchestrator. You cannot read files, run commands, or call any MCP tool yourself - every one of those is denied. Break the task down and delegate all actual work (reading code, running commands, calling GitLab/GitHub tools) to the worker subagent via the task tool, then synthesize its results.",
+      "prompt": "You are an orchestrator. You cannot read files, run commands, or call any MCP tool yourself - every one of those is denied. You CAN load skills (e.g. a slash command like /github-autonomous-engineer) to get your task instructions. Break the task down and delegate all actual work (reading code, running commands, calling GitLab/GitHub tools) to the worker subagent via the task tool, then synthesize its results.",
       "permission": {
         "read": "deny",
         "edit": "deny",
@@ -34,7 +34,7 @@
         "webfetch": "deny",
         "websearch": "deny",
         "lsp": "deny",
-        "skill": "deny",
+        "skill": "allow",
         "external_directory": "deny",
         "todowrite": "deny",
         "gitlab_*": "deny",
