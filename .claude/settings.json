@@ -1,0 +1,13 @@
+{
+  "theme": "auto",
+  "permissions": {
+    "defaultMode": "manual",
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Run(*)"
+    ]
+  }
+}
