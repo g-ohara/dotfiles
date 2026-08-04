@@ -22,8 +22,8 @@
     "orchestrator": {
       "mode": "primary",
       "model": "opencode-go/glm-5.2",
-      "description": "Plans work and delegates all execution to the worker subagent. Cannot read code, run commands, or call MCP tools directly.",
-      "prompt": "You are an orchestrator. You cannot read files, run commands, or call any MCP tool yourself - every one of those is denied. You CAN load skills (e.g. a slash command like /github-autonomous-engineer) to get your task instructions. Break the task down and delegate all actual work (reading code, running commands, calling GitLab/GitHub tools) to the worker subagent via the task tool, then synthesize its results.",
+      "description": "Plans work and delegates all execution to specialized subagents. Cannot read code, run commands, or call MCP tools directly.",
+      "prompt": "You are an orchestrator. You cannot read files, run commands, or call any MCP tool yourself - every one of those is denied. You CAN load skills (e.g. a slash command like /github-autonomous-engineer) to get your task instructions. Break the task down and delegate to the right specialist via the task tool, in order: implementer (writes/edits code, runs non-git shell commands) -> verifier (runs tests/builds/lints, cannot edit) -> committer (stages and commits locally) -> pusher (pushes to remote) -> vcs-mcp (GitLab/GitHub PRs, issues, reviews via MCP). Only invoke the subagents a given task actually needs. Synthesize their results.",
       "permission": {
         "read": "deny",
         "edit": "deny",
@@ -44,10 +44,90 @@
         }
       }
     },
-    "worker": {
+    "implementer": {
       "mode": "subagent",
       "model": "opencode-go/deepseek-v4-flash",
-      "description": "Does the actual work: reads code, runs commands, and calls GitLab/GitHub MCP tools on behalf of the orchestrator."
+      "description": "Writes and edits code. Can run non-git shell commands (installs, scaffolding, codegen) but cannot commit, push, or touch GitLab/GitHub.",
+      "permission": {
+        "read": "allow",
+        "edit": "allow",
+        "bash": {
+          "git commit*": "deny",
+          "git push*": "deny",
+          "gh *": "deny",
+          "glab *": "deny",
+          "*": "allow"
+        },
+        "gitlab_*": "deny",
+        "github_*": "deny"
+      }
+    },
+    "verifier": {
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Runs tests, builds, and lints to confirm the implementer's changes work. Cannot edit files, commit, push, or touch GitLab/GitHub.",
+      "permission": {
+        "read": "allow",
+        "edit": "deny",
+        "bash": {
+          "git commit*": "deny",
+          "git push*": "deny",
+          "gh *": "deny",
+          "glab *": "deny",
+          "*": "allow"
+        },
+        "gitlab_*": "deny",
+        "github_*": "deny"
+      }
+    },
+    "committer": {
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Stages and commits verified changes locally. Cannot edit files, push, or touch GitLab/GitHub.",
+      "permission": {
+        "read": "allow",
+        "edit": "deny",
+        "bash": {
+          "git add*": "allow",
+          "git commit*": "allow",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "*": "deny"
+        },
+        "gitlab_*": "deny",
+        "github_*": "deny"
+      }
+    },
+    "pusher": {
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Pushes committed changes to the remote. Cannot edit files, commit, or touch GitLab/GitHub.",
+      "permission": {
+        "read": "allow",
+        "edit": "deny",
+        "bash": {
+          "git push*": "allow",
+          "git status*": "allow",
+          "git log*": "allow",
+          "git branch*": "allow",
+          "*": "deny"
+        },
+        "gitlab_*": "deny",
+        "github_*": "deny"
+      }
+    },
+    "vcs-mcp": {
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Handles GitLab/GitHub operations via MCP (PRs, issues, reviews). Cannot edit files or run git/shell commands.",
+      "permission": {
+        "read": "allow",
+        "edit": "deny",
+        "bash": "deny",
+        "gitlab_*": "allow",
+        "github_*": "allow"
+      }
     }
   }
 }
