@@ -37,7 +37,10 @@ services:
       args:
         - CLAUDE_CODE_VERSION=2.1.220
     depends_on:
-      - gitlab-mcp
+      github-mcp:
+        condition: service_healthy
+      gitlab-mcp:
+        condition: service_healthy
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
       - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
@@ -110,6 +113,12 @@ services:
     environment:
       - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-o", "/dev/null", "http://localhost:3003/mcp"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
   gitlab-mcp:
     image: gitlab-mcp
     build:
@@ -126,6 +135,12 @@ services:
       - MCP_SERVER_URL=http://gitlab-mcp:3002
       - MCP_ALLOWED_HOSTS=gitlab-mcp,gitlab-mcp:3002
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-o", "/dev/null", "http://localhost:3002/mcp"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
   hermes-agent:
     image: hermes-agent:2026.7.20
     build:
@@ -133,8 +148,10 @@ services:
       args:
         - HERMES_AGENT_VERSION=2026.7.20
     depends_on:
-      - gitlab-mcp
-      - github-mcp
+      gitlab-mcp:
+        condition: service_healthy
+      github-mcp:
+        condition: service_healthy
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
     volumes:
@@ -196,8 +213,10 @@ services:
       args:
         - OPENCODE_VERSION=1.18.5
     depends_on:
-      - gitlab-mcp
-      - github-mcp
+      gitlab-mcp:
+        condition: service_healthy
+      github-mcp:
+        condition: service_healthy
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
     extends: common
