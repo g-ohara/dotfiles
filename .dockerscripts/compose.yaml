@@ -43,7 +43,6 @@ services:
         condition: service_healthy
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
-      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
     extends: common
     volumes:
       - type: bind
