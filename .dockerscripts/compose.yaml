@@ -46,8 +46,11 @@ services:
     extends: common
     volumes:
       - type: bind
+        source: ${HOME}/repos/
+        target: ${HOME}/repos/
+      - type: bind
         source: ${HOME}/.agents/
-        target: ${DOCKER_HOME:-/root}/.agents/
+        target: ${HOME}/.agents/
       - type: bind
         source: ${HOME}/.claude/
         target: ${DOCKER_HOME:-/root}/.claude/
