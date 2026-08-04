@@ -1,3 +1,5 @@
 #!/bin/sh
 # shellcheck enable=all
+touch ~/.claude.json &&
+mkdir -p ~/.claude/ &&
 docker compose -f "${HOME}"/.dockerscripts/compose.yaml run --rm claude-code claude "$@"
