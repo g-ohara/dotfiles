@@ -19,6 +19,9 @@
     "*": "allow"
   },
   "agent": {
+    "general": { "disable": true },
+    "explore": { "disable": true },
+    "scout": { "disable": true },
     "orchestrator": {
       "mode": "primary",
       "model": "opencode-go/glm-5.2",
