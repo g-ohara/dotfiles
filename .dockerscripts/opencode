@@ -10,4 +10,5 @@ RETVAL=$?
   mkdir -p "${HOME}"/.config/opencode &&
   mkdir -p "${HOME}"/.local/share/opencode &&
   mkdir -p "${HOME}"/.local/state/opencode &&
+  mkdir -p "${HOME}"/workspace &&
   docker compose -f "${HOME}"/.dockerscripts/compose.yaml run --service-ports --rm opencode opencode "$@"

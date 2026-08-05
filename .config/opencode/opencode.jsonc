@@ -13,6 +13,11 @@
       "type": "remote",
       "url": "http://github-mcp:3003/mcp",
       "oauth": false
+    },
+    "docker": {
+      "type": "remote",
+      "url": "http://docker-mcp:3004/sse",
+      "oauth": false
     }
   },
   "permission": {
@@ -42,6 +47,7 @@
         "todowrite": "deny",
         "gitlab_*": "deny",
         "github_*": "deny",
+        "docker_*": "deny",
         "task": {
           "*": "allow"
         }
@@ -62,13 +68,14 @@
           "*": "allow"
         },
         "gitlab_*": "deny",
-        "github_*": "deny"
+        "github_*": "deny",
+        "docker_*": "deny"
       }
     },
     "verifier": {
       "mode": "subagent",
       "model": "opencode-go/deepseek-v4-flash",
-      "description": "Runs tests, builds, and lints to confirm the implementer's changes work. Cannot edit files, commit, push, or touch GitLab/GitHub.",
+      "description": "Runs tests, builds, and lints to confirm the implementer's changes work. Can build Docker images and run test containers via docker-mcp. Cannot edit files, commit, push, or touch GitLab/GitHub.",
       "permission": {
         "read": "allow",
         "edit": "deny",
@@ -80,7 +87,8 @@
           "*": "allow"
         },
         "gitlab_*": "deny",
-        "github_*": "deny"
+        "github_*": "deny",
+        "docker_*": "allow"
       }
     },
     "committer": {
@@ -99,7 +107,8 @@
           "*": "deny"
         },
         "gitlab_*": "deny",
-        "github_*": "deny"
+        "github_*": "deny",
+        "docker_*": "deny"
       }
     },
     "pusher": {
@@ -117,7 +126,8 @@
           "*": "deny"
         },
         "gitlab_*": "deny",
-        "github_*": "deny"
+        "github_*": "deny",
+        "docker_*": "deny"
       }
     },
     "vcs-mcp": {
@@ -129,7 +139,8 @@
         "edit": "deny",
         "bash": "deny",
         "gitlab_*": "allow",
-        "github_*": "allow"
+        "github_*": "allow",
+        "docker_*": "deny"
       }
     }
   }

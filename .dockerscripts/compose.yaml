@@ -121,6 +121,24 @@ services:
       timeout: 3s
       retries: 5
       start_period: 10s
+  docker-mcp:
+    image: docker-mcp
+    build:
+      context: ./dockerfiles
+      dockerfile: docker-mcp/Dockerfile
+      args:
+        - DOCKER_VERSION=27-dind
+    privileged: true
+    pull_policy: never
+    volumes:
+      - ${HOME}/workspace:/workspace
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-o", "/dev/null", "http://localhost:3004/"]
+      interval: 5s
+      timeout: 3s
+      retries: 8
+      start_period: 20s
   gitlab-mcp:
     image: gitlab-mcp
     build:
@@ -219,8 +237,11 @@ services:
         condition: service_healthy
       github-mcp:
         condition: service_healthy
+      docker-mcp:
+        condition: service_healthy
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
+      - DOCKER_MCP_URL=http://docker-mcp:3004/sse
     extends: common
     ports:
       - 4966:4966
@@ -240,6 +261,9 @@ services:
       - type: bind
         source: ${HOME}/.local/state/opencode
         target: ${DOCKER_HOME:-/root}/.local/state/opencode
+      - type: bind
+        source: ${HOME}/workspace
+        target: /workspace
   poetry:
     image: poetry
     build:
