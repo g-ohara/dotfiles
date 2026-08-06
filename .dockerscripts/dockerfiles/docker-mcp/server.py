@@ -359,5 +359,105 @@ def stop_container(container_name: str) -> dict:
     }
 
 
+@mcp.tool()
+def list_images() -> dict:
+    """List Docker images present in the docker-mcp daemon (`docker images`)."""
+    try:
+        result = subprocess.run(
+            ["docker", "images"],
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker images timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
+@mcp.tool()
+def list_containers(all_containers: bool = True) -> dict:
+    """List containers in the docker-mcp daemon (`docker ps`).
+
+    Args:
+        all_containers: Include stopped containers as well as running ones
+            (default True). Set False to see only running containers.
+    """
+    command = ["docker", "ps"]
+    if all_containers:
+        command.append("-a")
+
+    try:
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker ps timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
+@mcp.tool()
+def inspect_object(name: str) -> dict:
+    """Return `docker inspect` output for an image or container.
+
+    Args:
+        name: Image tag/ID or container name/ID to inspect.
+    """
+    if not name:
+        return {"success": False, "error": "name is required"}
+
+    try:
+        result = subprocess.run(
+            ["docker", "inspect", name],
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker inspect timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
 if __name__ == "__main__":
     mcp.run(transport="sse")
