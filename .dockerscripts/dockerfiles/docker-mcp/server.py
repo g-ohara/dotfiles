@@ -207,6 +207,7 @@ def start_container(
     name: str | None = None,
     command: str | None = None,
     network: str | None = None,
+    ports: dict[str, str] | None = None,
 ) -> dict:
     """Start a background container that keeps running until stop_container is called.
 
@@ -223,6 +224,13 @@ def start_container(
             container to, so it can reach other containers on that network
             by name. Pass the same network to multiple containers to link
             them (e.g. an nginx container and the app it proxies to).
+        ports: Optional host_port -> container_port mapping (e.g.
+            {"8080": "80"}) published on docker-mcp's own network namespace.
+            Since docker-mcp's Docker daemon runs nested inside the
+            docker-mcp container rather than behind a separate network, a
+            published port is reachable as docker-mcp:<host_port> from any
+            other service on the compose network (e.g. opencode itself),
+            with no extra port mapping needed in compose.yaml.
     """
     if not image_name:
         return {"success": False, "error": "image_name is required"}
@@ -231,6 +239,8 @@ def start_container(
     docker_command = ["docker", "run", "-d", "--name", container_name]
     if network:
         docker_command.extend(["--network", network])
+    for host_port, container_port in (ports or {}).items():
+        docker_command.extend(["-p", f"{host_port}:{container_port}"])
     docker_command.append(image_name)
     if command:
         docker_command.extend(["sh", "-c", command])
