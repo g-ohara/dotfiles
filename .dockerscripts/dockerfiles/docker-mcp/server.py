@@ -27,6 +27,15 @@ def _validate_workspace_dir(path: str) -> tuple[str | None, str | None]:
     return resolved, None
 
 
+def _validate_workspace_path(path: str) -> tuple[str | None, str | None]:
+    if not path:
+        return None, "workspace_path is required"
+    resolved = os.path.realpath(path)
+    if resolved != WORKSPACE_ROOT and not resolved.startswith(WORKSPACE_ROOT + os.sep):
+        return None, f"'{path}' resolves outside of {WORKSPACE_ROOT}; refusing"
+    return resolved, None
+
+
 def _force_remove_container(name: str) -> None:
     subprocess.run(["docker", "kill", name], capture_output=True, text=True, timeout=10)
     subprocess.run(["docker", "rm", "-f", name], capture_output=True, text=True, timeout=10)
@@ -125,6 +134,58 @@ def run_test_container(image_name: str, command: str, timeout_seconds: int = DEF
         }
     except FileNotFoundError:
         return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+
+@mcp.tool()
+def docker_cp(container_name: str, container_path: str, workspace_path: str, direction: str) -> dict:
+    """Copy a file or directory between /workspace and a running container.
+
+    Args:
+        container_name: Name of an existing (running) container.
+        container_path: Path inside the container.
+        workspace_path: Path under /workspace to read from or write to.
+        direction: "to_container" copies workspace_path into the container,
+            "from_container" copies container_path out to workspace_path.
+    """
+    if direction not in ("to_container", "from_container"):
+        return {"success": False, "error": "direction must be 'to_container' or 'from_container'"}
+    if not container_name:
+        return {"success": False, "error": "container_name is required"}
+    if not container_path:
+        return {"success": False, "error": "container_path is required"}
+
+    resolved_ws, error = _validate_workspace_path(workspace_path)
+    if error:
+        return {"success": False, "error": error}
+
+    if direction == "to_container":
+        src, dest = resolved_ws, f"{container_name}:{container_path}"
+    else:
+        src, dest = f"{container_name}:{container_path}", resolved_ws
+
+    try:
+        result = subprocess.run(
+            ["docker", "cp", src, dest],
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker cp timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
 
 
 @mcp.tool()
