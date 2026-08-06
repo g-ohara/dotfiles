@@ -33,13 +33,17 @@ def _force_remove_container(name: str) -> None:
 
 
 @mcp.tool()
-def build_docker_image(dockerfile_dir: str, image_name: str) -> dict:
+def build_docker_image(
+    dockerfile_dir: str, image_name: str, build_args: dict[str, str] | None = None
+) -> dict:
     """Build a Docker image from a Dockerfile located under /workspace.
 
     Args:
         dockerfile_dir: Absolute path under /workspace containing the Dockerfile
             to build (e.g. "/workspace/projectA").
         image_name: Tag to assign to the built image (e.g. "projectA:test").
+        build_args: Optional build-time variables passed via --build-arg
+            (e.g. {"NEXT_PUBLIC_BASE_PATH": "/note"}).
     """
     resolved_dir, error = _validate_workspace_dir(dockerfile_dir)
     if error:
@@ -47,9 +51,14 @@ def build_docker_image(dockerfile_dir: str, image_name: str) -> dict:
     if not image_name:
         return {"success": False, "error": "image_name is required"}
 
+    command = ["docker", "build", "-t", image_name]
+    for key, value in (build_args or {}).items():
+        command.extend(["--build-arg", f"{key}={value}"])
+    command.append(resolved_dir)
+
     try:
         result = subprocess.run(
-            ["docker", "build", "-t", image_name, resolved_dir],
+            command,
             capture_output=True,
             text=True,
             timeout=BUILD_TIMEOUT_SECONDS,
