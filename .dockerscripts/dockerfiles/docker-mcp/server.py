@@ -92,7 +92,12 @@ def build_docker_image(
 
 
 @mcp.tool()
-def run_test_container(image_name: str, command: str, timeout_seconds: int = DEFAULT_RUN_TIMEOUT_SECONDS) -> dict:
+def run_test_container(
+    image_name: str,
+    command: str,
+    timeout_seconds: int = DEFAULT_RUN_TIMEOUT_SECONDS,
+    network: str | None = None,
+) -> dict:
     """Run a command inside a throwaway container and return its output.
 
     Args:
@@ -100,6 +105,9 @@ def run_test_container(image_name: str, command: str, timeout_seconds: int = DEF
         command: Shell command to execute inside the container.
         timeout_seconds: Max seconds to allow the container to run before it is
             killed (default 60, capped at 300).
+        network: Optional network (from create_network) to attach the
+            container to, so it can reach other containers on that network
+            by name.
     """
     if not image_name:
         return {"success": False, "error": "image_name is required"}
@@ -109,9 +117,14 @@ def run_test_container(image_name: str, command: str, timeout_seconds: int = DEF
     timeout_seconds = max(1, min(timeout_seconds, MAX_RUN_TIMEOUT_SECONDS))
     container_name = f"mcp-test-{uuid.uuid4().hex[:12]}"
 
+    docker_command = ["docker", "run", "--rm", "--name", container_name]
+    if network:
+        docker_command.extend(["--network", network])
+    docker_command.extend([image_name, "sh", "-c", command])
+
     try:
         result = subprocess.run(
-            ["docker", "run", "--rm", "--name", container_name, image_name, "sh", "-c", command],
+            docker_command,
             capture_output=True,
             text=True,
             timeout=timeout_seconds,
@@ -189,7 +202,12 @@ def docker_cp(container_name: str, container_path: str, workspace_path: str, dir
 
 
 @mcp.tool()
-def start_container(image_name: str, name: str | None = None, command: str | None = None) -> dict:
+def start_container(
+    image_name: str,
+    name: str | None = None,
+    command: str | None = None,
+    network: str | None = None,
+) -> dict:
     """Start a background container that keeps running until stop_container is called.
 
     Unlike run_test_container, the container is not removed when the started
@@ -201,12 +219,19 @@ def start_container(image_name: str, name: str | None = None, command: str | Non
         name: Optional container name. A unique name is generated if omitted.
         command: Optional shell command to run as the container's process; if
             omitted, the image's own default command/entrypoint is used.
+        network: Optional network (from create_network) to attach the
+            container to, so it can reach other containers on that network
+            by name. Pass the same network to multiple containers to link
+            them (e.g. an nginx container and the app it proxies to).
     """
     if not image_name:
         return {"success": False, "error": "image_name is required"}
 
     container_name = name or f"mcp-bg-{uuid.uuid4().hex[:12]}"
-    docker_command = ["docker", "run", "-d", "--name", container_name, image_name]
+    docker_command = ["docker", "run", "-d", "--name", container_name]
+    if network:
+        docker_command.extend(["--network", network])
+    docker_command.append(image_name)
     if command:
         docker_command.extend(["sh", "-c", command])
 
@@ -445,6 +470,82 @@ def inspect_object(name: str) -> dict:
         return {
             "success": False,
             "error": f"docker inspect timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
+@mcp.tool()
+def create_network(name: str) -> dict:
+    """Create a Docker network for linking multiple containers.
+
+    Pass the resulting name as `network` to start_container/run_test_container
+    for each container that needs to reach the others by container name
+    (e.g. an nginx container proxying to an app container).
+
+    Args:
+        name: Name for the network.
+    """
+    if not name:
+        return {"success": False, "error": "name is required"}
+
+    try:
+        result = subprocess.run(
+            ["docker", "network", "create", name],
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker network create timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "network_name": name if result.returncode == 0 else None,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
+@mcp.tool()
+def remove_network(name: str) -> dict:
+    """Remove a Docker network created with create_network.
+
+    Args:
+        name: Name of the network to remove. Fails if containers are still
+            attached to it; stop_container them first.
+    """
+    if not name:
+        return {"success": False, "error": "name is required"}
+
+    try:
+        result = subprocess.run(
+            ["docker", "network", "rm", name],
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker network rm timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
             "stdout": exc.stdout or "",
             "stderr": exc.stderr or "",
         }
