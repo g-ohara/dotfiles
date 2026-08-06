@@ -127,5 +127,176 @@ def run_test_container(image_name: str, command: str, timeout_seconds: int = DEF
         return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
 
 
+@mcp.tool()
+def start_container(image_name: str, name: str | None = None, command: str | None = None) -> dict:
+    """Start a background container that keeps running until stop_container is called.
+
+    Unlike run_test_container, the container is not removed when the started
+    process exits, so it can be inspected with container_logs, driven with
+    exec_in_container, and used as a docker_cp target.
+
+    Args:
+        image_name: Image to run, typically one produced by build_docker_image.
+        name: Optional container name. A unique name is generated if omitted.
+        command: Optional shell command to run as the container's process; if
+            omitted, the image's own default command/entrypoint is used.
+    """
+    if not image_name:
+        return {"success": False, "error": "image_name is required"}
+
+    container_name = name or f"mcp-bg-{uuid.uuid4().hex[:12]}"
+    docker_command = ["docker", "run", "-d", "--name", container_name, image_name]
+    if command:
+        docker_command.extend(["sh", "-c", command])
+
+    try:
+        result = subprocess.run(
+            docker_command,
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker run timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "container_name": container_name if result.returncode == 0 else None,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
+@mcp.tool()
+def container_logs(container_name: str, tail: int | None = None) -> dict:
+    """Fetch logs from a container started with start_container.
+
+    Args:
+        container_name: Name of the container.
+        tail: Optional number of trailing log lines to return; omit for the
+            full log.
+    """
+    if not container_name:
+        return {"success": False, "error": "container_name is required"}
+
+    command = ["docker", "logs"]
+    if tail is not None:
+        command.extend(["--tail", str(tail)])
+    command.append(container_name)
+
+    try:
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker logs timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
+@mcp.tool()
+def exec_in_container(
+    container_name: str, command: str, timeout_seconds: int = DEFAULT_RUN_TIMEOUT_SECONDS
+) -> dict:
+    """Run a command inside an already-running container.
+
+    Args:
+        container_name: Name of a running container, typically one started
+            with start_container.
+        command: Shell command to execute inside the container.
+        timeout_seconds: Max seconds to allow the command to run before it is
+            killed (default 60, capped at 300).
+    """
+    if not container_name:
+        return {"success": False, "error": "container_name is required"}
+    if not command:
+        return {"success": False, "error": "command is required"}
+
+    timeout_seconds = max(1, min(timeout_seconds, MAX_RUN_TIMEOUT_SECONDS))
+
+    try:
+        result = subprocess.run(
+            ["docker", "exec", container_name, "sh", "-c", command],
+            capture_output=True,
+            text=True,
+            timeout=timeout_seconds,
+        )
+        return {
+            "success": result.returncode == 0,
+            "exit_code": result.returncode,
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+            "timed_out": False,
+        }
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"exec timed out after {timeout_seconds}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+            "timed_out": True,
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+
+@mcp.tool()
+def stop_container(container_name: str) -> dict:
+    """Stop and remove a background container started with start_container.
+
+    Args:
+        container_name: Name of the container to stop and remove.
+    """
+    if not container_name:
+        return {"success": False, "error": "container_name is required"}
+
+    try:
+        result = subprocess.run(
+            ["docker", "rm", "-f", container_name],
+            capture_output=True,
+            text=True,
+            timeout=DEFAULT_RUN_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "success": False,
+            "error": f"docker rm timed out after {DEFAULT_RUN_TIMEOUT_SECONDS}s",
+            "stdout": exc.stdout or "",
+            "stderr": exc.stderr or "",
+        }
+    except FileNotFoundError:
+        return {"success": False, "error": "docker CLI not found in the docker-mcp container"}
+
+    return {
+        "success": result.returncode == 0,
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+    }
+
+
 if __name__ == "__main__":
     mcp.run(transport="sse")
