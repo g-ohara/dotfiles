@@ -134,7 +134,7 @@ services:
       - ${HOME}/workspace:/workspace
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-s", "-o", "/dev/null", "http://localhost:3004/"]
+      test: ["CMD", "curl", "-s", "-o", "/dev/null", "http://localhost:3004/mcp"]
       interval: 5s
       timeout: 3s
       retries: 8
@@ -241,7 +241,7 @@ services:
         condition: service_healthy
     environment:
       - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
-      - DOCKER_MCP_URL=http://docker-mcp:3004/sse
+      - DOCKER_MCP_URL=http://docker-mcp:3004/mcp
     extends: common
     ports:
       - 4966:4966

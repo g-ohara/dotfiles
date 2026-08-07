@@ -16,7 +16,7 @@
     },
     "docker": {
       "type": "remote",
-      "url": "http://docker-mcp:3004/sse",
+      "url": "http://docker-mcp:3004/mcp",
       "oauth": false,
       "timeout": 300000
     }

@@ -13,6 +13,7 @@ mcp = FastMCP(
     "docker-mcp",
     host=os.environ.get("HOST", "0.0.0.0"),
     port=int(os.environ.get("PORT", "3004")),
+    streamable_http_path="/mcp",
 )
 
 
@@ -571,4 +572,4 @@ def remove_network(name: str) -> dict:
 
 
 if __name__ == "__main__":
-    mcp.run(transport="sse")
+    mcp.run(transport="streamable-http")
