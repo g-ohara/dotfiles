@@ -81,11 +81,11 @@
         "read": "allow",
         "edit": "deny",
         "bash": {
+          "*": "allow",
           "git commit*": "deny",
           "git push*": "deny",
           "gh *": "deny",
-          "glab *": "deny",
-          "*": "allow"
+          "glab *": "deny"
         },
         "gitlab_*": "deny",
         "github_*": "deny",
@@ -100,12 +100,12 @@
         "read": "allow",
         "edit": "deny",
         "bash": {
+          "*": "deny",
           "git add*": "allow",
           "git commit*": "allow",
           "git status*": "allow",
           "git diff*": "allow",
-          "git log*": "allow",
-          "*": "deny"
+          "git log*": "allow"
         },
         "gitlab_*": "deny",
         "github_*": "deny",
@@ -120,11 +120,11 @@
         "read": "allow",
         "edit": "deny",
         "bash": {
+          "*": "deny",
           "git push*": "allow",
           "git status*": "allow",
           "git log*": "allow",
-          "git branch*": "allow",
-          "*": "deny"
+          "git branch*": "allow"
         },
         "gitlab_*": "deny",
         "github_*": "deny",
