@@ -214,8 +214,8 @@ services:
         target: ${HOME}
       - ${XDG_RUNTIME_DIR}/docker.sock:${XDG_RUNTIME_DIR}/docker.sock
     environment:
-      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
-      - DOCKER_CONTEXT=${DOCKER_CONTEXT}
+      - XDG_RUNTIME_DIR
+      - DOCKER_CONTEXT
     extends: common
   node-tsserver:
     image: node-tsserver
@@ -240,8 +240,10 @@ services:
       docker-mcp:
         condition: service_healthy
     environment:
-      - STREAMABLE_HTTP_AUTH_TOKEN=${STREAMABLE_HTTP_AUTH_TOKEN}
+      - STREAMABLE_HTTP_AUTH_TOKEN
       - DOCKER_MCP_URL=http://docker-mcp:3004/mcp
+      - GITHUB_PERSONAL_ACCESS_TOKEN
+      - GITLAB_PERSONAL_ACCESS_TOKEN
     extends: common
     ports:
       - 4966:4966
